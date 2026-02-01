@@ -109,6 +109,76 @@
         .search-box { max-width: 600px; margin: 0 auto 2rem; }
         .search-box input { width: 100%; padding: 1rem 1.5rem; font-size: 1rem; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; transition: all 0.3s ease; }
         .search-box input:focus { outline: none; border-color: #FFD700; background: rgba(255, 255, 255, 0.08); }
+        
+        /* Newsletter Section */
+        .newsletter-section { 
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1)); 
+            border: 2px solid rgba(255, 215, 0, 0.3); 
+            border-radius: 20px; 
+            padding: 2.5rem; 
+            max-width: 700px; 
+            margin: 0 auto 3rem; 
+            text-align: center;
+        }
+        .newsletter-section h3 { 
+            font-size: 1.5rem; 
+            margin-bottom: 0.5rem; 
+            color: #FFD700; 
+        }
+        .newsletter-section p { 
+            color: #ccc; 
+            margin-bottom: 1.5rem; 
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .newsletter-form { 
+            display: flex; 
+            gap: 0.75rem; 
+            max-width: 500px; 
+            margin: 0 auto; 
+        }
+        .newsletter-form input[type="email"] { 
+            flex: 1; 
+            padding: 1rem 1.25rem; 
+            font-size: 1rem; 
+            background: rgba(0, 0, 0, 0.3); 
+            border: 2px solid rgba(255, 215, 0, 0.3); 
+            border-radius: 12px; 
+            color: #fff; 
+            transition: all 0.3s ease;
+        }
+        .newsletter-form input[type="email"]:focus { 
+            outline: none; 
+            border-color: #FFD700; 
+            background: rgba(0, 0, 0, 0.4);
+        }
+        .newsletter-form input[type="email"]::placeholder { color: #888; }
+        .newsletter-form button { 
+            padding: 1rem 2rem; 
+            font-size: 1rem; 
+            font-weight: 600; 
+            background: linear-gradient(135deg, #FFD700, #FFA500); 
+            border: none; 
+            border-radius: 12px; 
+            color: #000; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .newsletter-form button:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+        .newsletter-note { 
+            font-size: 0.8rem; 
+            color: #888; 
+            margin-top: 1rem; 
+        }
+        @media (max-width: 600px) {
+            .newsletter-form { flex-direction: column; }
+            .newsletter-form button { width: 100%; }
+        }
+        
         .category-section { padding: 2rem; max-width: 1400px; margin: 0 auto; }
         .category-header { text-align: center; margin-bottom: 1.5rem; }
         .category-header h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
@@ -206,6 +276,18 @@
         <div class="search-box">
             <input type="text" placeholder="Search for any topic, guest, or insight..." id="searchInput">
         </div>
+    </div>
+
+    <div class="newsletter-section">
+        <h3>🎯 Get Weekly Wisdom (5 min read)</h3>
+        <p>Every week, we distill the best insights from DOAC episodes into actionable takeaways. No fluff, just the wisdom that matters — delivered to your inbox.</p>
+        <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="newsletter">
+            <input type="hidden" name="bot-field">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe Free</button>
+        </form>
+        <p class="newsletter-note">Join 0 readers • Unsubscribe anytime</p>
     </div>
 
     <div class="category-section">
