@@ -1,0 +1,11 @@
+# Robots.txt for DiaryOfCEO.online
+# https://diaryofceo.online
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://diaryofceo.online/sitemap.xml
+
+# Crawl-delay (optional, be nice to the server)
+Crawl-delay: 1
