@@ -342,25 +342,29 @@
   // 5. EXIT INTENT POPUP
   // ============================================
   function setupExitIntent() {
-    let shown = false;
     const user = getUser();
-    if (user.subscribedNewsletter) return; // don't show if already subscribed
+    if (user.subscribedNewsletter) return;
+
+    let cooldown = false;
 
     document.addEventListener('mouseleave', (e) => {
-      if (e.clientY <= 0 && !shown) {
-        shown = true;
+      if (e.clientY <= 0 && !cooldown) {
+        cooldown = true;
         showExitPopup();
+        // Allow showing again after 60 seconds
+        setTimeout(() => { cooldown = false; }, 60000);
       }
     });
 
-    // Mobile: show after 60 seconds if scrolled > 50%
+    // Mobile: show every 45 seconds of scrolling
     if ('ontouchstart' in window) {
-      setTimeout(() => {
-        if (!shown && window.scrollY > document.body.scrollHeight * 0.4) {
-          shown = true;
+      setInterval(() => {
+        if (!cooldown && window.scrollY > document.body.scrollHeight * 0.3) {
+          cooldown = true;
           showExitPopup();
+          setTimeout(() => { cooldown = false; }, 60000);
         }
-      }, 60000);
+      }, 45000);
     }
   }
 
