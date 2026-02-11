@@ -1,0 +1,66 @@
+/* Diary of a CEO - Shared Styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0f0f1e, #1a1a2e, #16213e); color: #e0e0e0; min-height: 100vh; }
+a { color: #FFD700; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.header { background: rgba(10, 10, 20, 0.9); padding: 1.5rem 2rem; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
+.header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+.logo:hover { text-decoration: none; }
+.logo-icon { background: linear-gradient(135deg, #FFD700, #FFA500); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; color: #000; }
+.logo-text { font-size: 1.5rem; font-weight: 600; color: #fff; }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-links a { color: #ccc; font-size: 0.95rem; transition: color 0.3s; }
+.nav-links a:hover { color: #FFD700; text-decoration: none; }
+
+/* Episode Page Styles */
+.episode-container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+.breadcrumb { margin-bottom: 1.5rem; font-size: 0.9rem; color: #999; }
+.breadcrumb a { color: #FFD700; }
+.episode-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.meta-tag { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; color: #FFD700; }
+.episode-container h1 { font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.3; color: #fff; }
+.guest-bio { background: rgba(255, 255, 255, 0.05); border-left: 4px solid #FFD700; padding: 1.2rem 1.5rem; border-radius: 0 12px 12px 0; margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.7; color: #ccc; }
+.section-title { font-size: 1.5rem; color: #FFD700; margin: 2rem 0 1rem; font-weight: 600; }
+.episode-summary { line-height: 1.8; font-size: 1rem; color: #ddd; margin-bottom: 2rem; }
+.episode-summary p { margin-bottom: 1rem; }
+
+blockquote { background: linear-gradient(135deg, rgba(139, 69, 255, 0.1), rgba(255, 105, 180, 0.1)); border-left: 4px solid #8B45FF; padding: 1.2rem 1.5rem; border-radius: 0 12px 12px 0; margin-bottom: 1rem; font-style: italic; font-size: 1.05rem; line-height: 1.6; color: #fff; }
+
+.takeaways-list { list-style: none; counter-reset: takeaway; }
+.takeaways-list li { background: rgba(0, 0, 0, 0.3); padding: 1.2rem 1.5rem 1.2rem 3.5rem; border-radius: 12px; margin-bottom: 0.8rem; border-left: 4px solid #FFD700; font-size: 1rem; line-height: 1.7; color: #fff; position: relative; counter-increment: takeaway; }
+.takeaways-list li::before { content: counter(takeaway); position: absolute; left: 1rem; top: 1.2rem; background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; }
+
+/* Newsletter CTA */
+.newsletter-cta { background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1)); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 20px; padding: 2.5rem; text-align: center; margin: 3rem 0; }
+.newsletter-cta h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #FFD700; }
+.newsletter-cta p { color: #ccc; margin-bottom: 1.5rem; font-size: 1rem; line-height: 1.6; }
+.newsletter-form { display: flex; gap: 0.75rem; max-width: 500px; margin: 0 auto; }
+.newsletter-form input[type="email"] { flex: 1; padding: 1rem 1.25rem; font-size: 1rem; background: rgba(0, 0, 0, 0.3); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 12px; color: #fff; transition: all 0.3s ease; }
+.newsletter-form input[type="email"]:focus { outline: none; border-color: #FFD700; background: rgba(0, 0, 0, 0.4); }
+.newsletter-form input[type="email"]::placeholder { color: #888; }
+.newsletter-form button { padding: 1rem 2rem; font-size: 1rem; font-weight: 600; background: linear-gradient(135deg, #FFD700, #FFA500); border: none; border-radius: 12px; color: #000; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; }
+.newsletter-form button:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4); }
+
+/* Episodes Directory */
+.episodes-directory { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+.episodes-directory h1 { font-size: 2.5rem; text-align: center; margin-bottom: 0.5rem; }
+.episodes-directory .subtitle { text-align: center; color: #999; margin-bottom: 2rem; font-size: 1.1rem; }
+.episode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
+.ep-card { background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; transition: all 0.3s ease; text-decoration: none; display: block; }
+.ep-card:hover { background: rgba(255, 255, 255, 0.08); border-color: #FFD700; transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); text-decoration: none; }
+.ep-card h3 { font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem; line-height: 1.4; }
+.ep-card .guest { color: #FFD700; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.ep-card .desc { color: #aaa; font-size: 0.85rem; line-height: 1.5; }
+
+.footer { text-align: center; padding: 2rem; color: #666; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 2rem; }
+
+@media (max-width: 768px) {
+    .episode-container h1 { font-size: 1.6rem; }
+    .episode-container { padding: 1rem; }
+    .newsletter-form { flex-direction: column; }
+    .newsletter-form button { width: 100%; }
+    .episode-grid { grid-template-columns: 1fr; }
+    .nav-links { gap: 0.8rem; }
+}

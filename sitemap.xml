@@ -1,54 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
   <url>
     <loc>https://diaryofceo.online/</loc>
-    <lastmod>2026-02-01</lastmod>
+    <lastmod>2026-02-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Category pages (virtual - handled by JS routing) -->
   <url>
-    <loc>https://diaryofceo.online/#mind-psychology</loc>
-    <lastmod>2026-02-01</lastmod>
+    <loc>https://diaryofceo.online/episodes/</loc>
+    <lastmod>2026-02-11</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/simon-sinek.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://diaryofceo.online/#health-body</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://diaryofceo.online/episodes/chris-williamson.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://diaryofceo.online/#success-productivity</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://diaryofceo.online/episodes/andrew-huberman.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://diaryofceo.online/#money-business</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://diaryofceo.online/episodes/jay-shetty.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://diaryofceo.online/#happiness-fulfillment</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://diaryofceo.online/episodes/mo-gawdat.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://diaryofceo.online/#technology-future</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://diaryofceo.online/episodes/robert-greene.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://diaryofceo.online/#relationships</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://diaryofceo.online/episodes/matthew-walker.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/gabor-mate.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/ali-abdaal.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/jordan-peterson.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/paul-conti.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/steven-bartlett.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/gary-vee.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/tony-robbins.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/alex-hormozi.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/mark-manson.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/tim-ferriss.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/joe-dispenza.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/ramit-sethi.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://diaryofceo.online/episodes/daniel-amen.html</loc>
+    <lastmod>2026-02-11</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>
