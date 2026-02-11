@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary of a CEO Topics — Browse Episodes by Category</title>
+    <meta name="description" content="Browse Diary of a CEO episodes by topic: psychology, health, business, relationships, and more.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://diaryofceo.online/">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0f0f1e, #1a1a2e, #16213e); color: #e0e0e0; min-height: 100vh; }
+        .header { background: rgba(10, 10, 20, 0.9); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .logo-icon { background: linear-gradient(135deg, #FFD700, #FFA500); width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: #000; }
+        .logo-text { font-size: 1.3rem; font-weight: 600; color: #fff; }
+        nav { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        nav a { color: #ccc; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s; }
+        nav a:hover, nav a.active { color: #FFD700; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        h1 .highlight { background: linear-gradient(135deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .subtitle { color: #999; font-size: 1.1rem; margin-bottom: 2rem; }
+        .card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; transition: all 0.3s ease; }
+        .card:hover { border-color: #FFD700; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15); }
+        .card a { color: #FFD700; text-decoration: none; }
+        .card a:hover { text-decoration: underline; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
+        .tag { display: inline-block; background: rgba(255, 215, 0, 0.15); color: #FFD700; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; margin: 0.2rem; }
+        .search-box { max-width: 600px; margin: 0 auto 2rem; }
+        .search-box input { width: 100%; padding: 1rem 1.5rem; font-size: 1rem; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; }
+        .search-box input:focus { outline: none; border-color: #FFD700; }
+        .badge { display: inline-block; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 0.4rem 1.2rem; border-radius: 25px; color: #FFD700; font-size: 0.85rem; margin-bottom: 1.5rem; }
+        footer { text-align: center; padding: 3rem 2rem; color: #666; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 3rem; }
+        footer a { color: #FFD700; text-decoration: none; }
+        @media (max-width: 768px) { h1 { font-size: 1.8rem; } .grid { grid-template-columns: 1fr; } nav { gap: 0.75rem; } }
+    </style>
+</head><body>
+<header class="header">
+    <div class="header-content">
+        <a href="/" class="logo">
+            <div class="logo-icon">D</div>
+            <span class="logo-text">DOAC Summaries</span>
+        </a>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/episodes.html">Episodes</a>
+            <a href="/topics/" class="active">Topics</a>
+            <a href="/quotes.html">Quotes</a>
+            <a href="/best-episodes.html">Best Episodes</a>
+            <a href="/#newsletter">Newsletter</a>
+        </nav>
+    </div>
+</header>
+<div class="container" style="text-align:center; padding-top:3rem;">
+    <span class="badge">📂 7 Topics</span>
+    <h1>Browse by <span class="highlight">Topic</span></h1>
+    <p class="subtitle">Explore 600+ episodes organized by category</p>
+    <div class="grid" style="margin-top:2rem;">
+        <a href="/topics/mind-psychology.html" style="text-decoration:none;">
+            <div class="card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:3rem; margin-bottom:0.75rem;">🧠</div>
+                <h3 style="color:#fff; margin-bottom:0.3rem;">Mind & Psychology</h3>
+                <p style="color:#FFD700; font-weight:bold;">274 episodes</p>
+                <p style="color:#999; font-size:0.85rem; margin-top:0.5rem;">Episodes exploring the human mind, psychology, habits, and mental health</p>
+            </div>
+        </a>
+        <a href="/topics/health-body.html" style="text-decoration:none;">
+            <div class="card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:3rem; margin-bottom:0.75rem;">💪</div>
+                <h3 style="color:#fff; margin-bottom:0.3rem;">Health & Body</h3>
+                <p style="color:#FFD700; font-weight:bold;">204 episodes</p>
+                <p style="color:#999; font-size:0.85rem; margin-top:0.5rem;">Episodes on fitness, nutrition, longevity, and physical well-being</p>
+            </div>
+        </a>
+        <a href="/topics/success-productivity.html" style="text-decoration:none;">
+            <div class="card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:3rem; margin-bottom:0.75rem;">🚀</div>
+                <h3 style="color:#fff; margin-bottom:0.3rem;">Success & Productivity</h3>
+                <p style="color:#FFD700; font-weight:bold;">197 episodes</p>
+                <p style="color:#999; font-size:0.85rem; margin-top:0.5rem;">Episodes about achieving goals, productivity systems, and peak performance</p>
+            </div>
+        </a>
+        <a href="/topics/money-business.html" style="text-decoration:none;">
+            <div class="card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:3rem; margin-bottom:0.75rem;">💰</div>
+                <h3 style="color:#fff; margin-bottom:0.3rem;">Money & Business</h3>
+                <p style="color:#FFD700; font-weight:bold;">112 episodes</p>
+                <p style="color:#999; font-size:0.85rem; margin-top:0.5rem;">Episodes on entrepreneurship, investing, wealth building, and business strategy</p>
+            </div>
+        </a>
+        <a href="/topics/happiness-fulfillment.html" style="text-decoration:none;">
+            <div class="card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:3rem; margin-bottom:0.75rem;">😊</div>
+                <h3 style="color:#fff; margin-bottom:0.3rem;">Happiness & Fulfillment</h3>
+                <p style="color:#FFD700; font-weight:bold;">59 episodes</p>
+                <p style="color:#999; font-size:0.85rem; margin-top:0.5rem;">Episodes about finding purpose, joy, relationships, and life satisfaction</p>
+            </div>
+        </a>
+        <a href="/topics/technology-future.html" style="text-decoration:none;">
+            <div class="card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:3rem; margin-bottom:0.75rem;">🤖</div>
+                <h3 style="color:#fff; margin-bottom:0.3rem;">Technology & Future</h3>
+                <p style="color:#FFD700; font-weight:bold;">48 episodes</p>
+                <p style="color:#999; font-size:0.85rem; margin-top:0.5rem;">Episodes exploring AI, tech trends, innovation, and the future of humanity</p>
+            </div>
+        </a>
+        <a href="/topics/relationships.html" style="text-decoration:none;">
+            <div class="card" style="text-align:center; cursor:pointer;">
+                <div style="font-size:3rem; margin-bottom:0.75rem;">❤️</div>
+                <h3 style="color:#fff; margin-bottom:0.3rem;">Relationships</h3>
+                <p style="color:#FFD700; font-weight:bold;">42 episodes</p>
+                <p style="color:#999; font-size:0.85rem; margin-top:0.5rem;">Episodes on love, dating, communication, and building meaningful connections</p>
+            </div>
+        </a></div></div><footer>
+    <p>© 2025 DiaryOfCEO.online — Unofficial fan resource. Not affiliated with Steven Bartlett.</p>
+    <p style="margin-top:0.5rem"><a href="/">Home</a> · <a href="/episodes.html">Episodes</a> · <a href="/topics/">Topics</a> · <a href="/quotes.html">Quotes</a> · <a href="/best-episodes.html">Best Episodes</a></p>
+</footer></body></html>
