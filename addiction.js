@@ -292,7 +292,7 @@
     el.innerHTML = `
       <div class="doac-progress-header">
         <span class="doac-progress-level">${level.emoji} ${level.name}</span>
-        <span class="doac-progress-count">${count}/600 episodes explored</span>
+        <span class="doac-progress-count">${count}/178 episodes explored</span>
       </div>
       <div class="doac-progress-bar"><div class="doac-progress-fill" style="width:${Math.min(pct, 100)}%"></div></div>
       ${nextLevel ? `<div class="doac-progress-next">Next: ${nextLevel.emoji} ${nextLevel.name} (${nextLevel.min - count} more)</div>` : '<div class="doac-progress-next">🏆 You\'ve reached the highest level!</div>'}
@@ -309,7 +309,7 @@
       const nextLevel = getNextLevel(count);
       const pct = nextLevel ? ((count - level.min) / (nextLevel.min - level.min)) * 100 : 100;
       existing.querySelector('.doac-progress-level').textContent = `${level.emoji} ${level.name}`;
-      existing.querySelector('.doac-progress-count').textContent = `${count}/600 episodes explored`;
+      existing.querySelector('.doac-progress-count').textContent = `${count}/178 episodes explored`;
       existing.querySelector('.doac-progress-fill').style.width = `${Math.min(pct, 100)}%`;
     }
   }
