@@ -472,15 +472,15 @@
     init();
   }
 
-  // Beehiiv subscription helper
+  // Beehiiv subscription helper — uses hidden iframe to bypass CORS
   var BEEHIIV_PUB = 'eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb';
   function subscribeToBeehiiv(email, callback) {
     var url = 'https://magic.beehiiv.com/v1/' + BEEHIIV_PUB + '?email=' + encodeURIComponent(email);
-    fetch(url, { method: 'GET', mode: 'no-cors' }).then(function() {
-      if (callback) callback(true);
-    }).catch(function() {
-      if (callback) callback(false);
-    });
+    var iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = url;
+    document.body.appendChild(iframe);
+    setTimeout(function() { iframe.remove(); if (callback) callback(true); }, 3000);
   }
 
   function initNewsletterForms() {
