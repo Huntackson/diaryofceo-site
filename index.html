@@ -305,15 +305,10 @@
           e.preventDefault();
           var form = this;
           var email = form.querySelector('input[type="email"]').value;
-          // Store locally as backup
-          var subs = JSON.parse(localStorage.getItem('doac_subscribers') || '[]');
-          subs.push({email: email, ts: Date.now()});
-          localStorage.setItem('doac_subscribers', JSON.stringify(subs));
-          // Try Netlify Forms submission silently
-          fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
-            body: new URLSearchParams(new FormData(form)).toString()
-          }).catch(function(){});
-          // Show success regardless
+          // Subscribe via Beehiiv
+          var pubId = 'eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb';
+          fetch('https://magic.beehiiv.com/v1/' + pubId + '?email=' + encodeURIComponent(email), { method: 'GET', mode: 'no-cors' }).catch(function(){});
+          // Show success
           form.style.display = 'none';
           document.getElementById('newsletterSuccess').style.display = 'block';
         });
@@ -680,6 +675,6 @@
         init();
     </script>
   <footer style="text-align:center;padding:2rem;color:#666;font-size:0.8rem;border-top:1px solid rgba(255,255,255,0.05);"><a href="/about.html" style="color:#FFD700;text-decoration:none;">About</a> · <a href="/episodes/" style="color:#FFD700;text-decoration:none;">All Episodes</a></footer>
-  <script src="/addiction.js?v=2"></script>
+  <script src="/addiction.js?v=3"></script>
 </body>
 </html>
