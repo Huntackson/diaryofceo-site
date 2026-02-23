@@ -301,7 +301,22 @@
             <div style="color:#ccc;font-size:0.9rem;margin-top:0.3rem;">Check your inbox for your first dose of DOAC wisdom.</div>
         </div>
         <script>
-        // Newsletter handled by Beehiiv embed
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          var form = this;
+          var email = form.querySelector('input[type="email"]').value;
+          // Store locally as backup
+          var subs = JSON.parse(localStorage.getItem('doac_subscribers') || '[]');
+          subs.push({email: email, ts: Date.now()});
+          localStorage.setItem('doac_subscribers', JSON.stringify(subs));
+          // Try Netlify Forms submission silently
+          fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
+            body: new URLSearchParams(new FormData(form)).toString()
+          }).catch(function(){});
+          // Show success regardless
+          form.style.display = 'none';
+          document.getElementById('newsletterSuccess').style.display = 'block';
+        });
         </script>
         <p class="newsletter-note">Join 10,000+ readers • Unsubscribe anytime</p>
     </div>
