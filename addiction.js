@@ -199,11 +199,11 @@
   // 5. EXIT INTENT POPUP
   // ============================================
   function initExitIntent() {
-    let cooldown = false;
+    if (sessionStorage.getItem('doac_exit_shown')) return;
 
     document.addEventListener('mouseout', function(e) {
-      if (e.clientY < 10 && !cooldown && !document.querySelector('.doac-exit-overlay')) {
-        cooldown = true;
+      if (e.clientY < 10 && !document.querySelector('.doac-exit-overlay')) {
+        sessionStorage.setItem('doac_exit_shown', 'true');
         
         const overlay = document.createElement('div');
         overlay.className = 'doac-exit-overlay';
@@ -223,11 +223,7 @@
           </div>
         `;
         document.body.appendChild(overlay);
-        // Reset cooldown 60s after close so it can show again
-        const closeBtn = overlay.querySelector('.doac-exit-close');
-        const resetCooldown = function() { setTimeout(function(){ cooldown = false; }, 60000); };
-        closeBtn.addEventListener('click', resetCooldown);
-        overlay.addEventListener('click', function(ev) { if (ev.target === overlay) { overlay.remove(); resetCooldown(); }});
+        overlay.addEventListener('click', function(ev) { if (ev.target === overlay) { overlay.remove(); }});
       }
     });
   }
