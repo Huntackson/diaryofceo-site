@@ -236,18 +236,27 @@
   // 6. LIVE READER COUNT ON EPISODES
   // ============================================
   function initLiveReaders() {
-    // Only target episode links in content areas, not nav/header/breadcrumb
-    const episodeCards = document.querySelectorAll('.related-grid a[href*="/episodes/"], .episode-grid a[href*="/episodes/"], div[style*="grid"] > a[href*="/episodes/"]');
-    episodeCards.forEach(card => {
-      if (Math.random() > 0.4) { // 60% of cards get a badge
-        const count = Math.floor(Math.random() * 89) + 12;
-        const badge = document.createElement('span');
-        badge.className = 'doac-live-badge';
-        badge.innerHTML = `🔥 ${count} reading now`;
-        card.style.position = 'relative';
-        card.appendChild(badge);
-      }
-    });
+    // Single floating "reading now" badge
+    const isEpisodePage = window.location.pathname.includes('/episodes/');
+    const count = Math.floor(Math.random() * 89) + 12;
+    const badge = document.createElement('div');
+    badge.className = 'doac-live-badge-float';
+    badge.innerHTML = '🔥 ' + count + ' reading now';
+    // Homepage: bottom-right. Episode pages: bottom-left.
+    if (isEpisodePage) {
+      badge.style.cssText = 'position:fixed;bottom:20px;left:20px;z-index:9999;';
+    } else {
+      badge.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;';
+    }
+    document.body.appendChild(badge);
+    // Slowly update the count
+    setInterval(function() {
+      var delta = Math.random() > 0.5 ? 1 : -1;
+      var cur = parseInt(badge.textContent.match(/\d+/)[0]) + delta;
+      if (cur < 10) cur = 10;
+      if (cur > 120) cur = 120;
+      badge.innerHTML = '🔥 ' + cur + ' reading now';
+    }, 8000);
   }
 
   // ============================================
@@ -403,18 +412,17 @@
     .doac-exit-form input { flex: 1; padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: #fff; font-size: 1rem; }
     .doac-exit-form button { padding: 12px 20px; background: linear-gradient(135deg, #FFD700, #FFA500); border: none; border-radius: 10px; color: #000; font-weight: 700; cursor: pointer; white-space: nowrap; }
 
-    /* Live Reader Badge */
-    .doac-live-badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(255,107,0,0.9);
+    /* Live Reader Badge - Floating */
+    .doac-live-badge-float {
+      background: rgba(255,107,0,0.95);
       color: #fff;
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(255,107,0,0.4);
       animation: doac-pulse 2s infinite;
+      cursor: default;
     }
     @keyframes doac-pulse {
       0%, 100% { opacity: 1; }
