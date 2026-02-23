@@ -289,8 +289,29 @@
     <div class="newsletter-section" id="newsletter">
         <h3>🎯 Get Weekly Wisdom (5 min read)</h3>
         <p>Every week, we distill the best insights from DOAC episodes into actionable takeaways. No fluff, just the wisdom that matters — delivered to your inbox.</p>
-        <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
-        <iframe src="https://subscribe-forms.beehiiv.com/0e9f8e9b-1ace-4690-af13-a8c8e6f7d7b3" class="beehiiv-embed" data-test-id="beehiiv-embed" frameborder="0" scrolling="no" style="width:100%;max-width:560px;height:290px;margin:0 auto;display:block;border-radius:0;background-color:transparent;box-shadow:none;"></iframe>
+        <form class="newsletter-form" id="newsletterForm" onsubmit="return false;">
+            <input type="email" id="nlEmail" placeholder="Enter your email" required>
+            <button type="submit" id="nlBtn">Subscribe Free</button>
+        </form>
+        <div id="newsletterSuccess" style="display:none;background:linear-gradient(135deg,rgba(76,175,80,0.2),rgba(76,175,80,0.1));border:2px solid rgba(76,175,80,0.4);border-radius:12px;padding:1.5rem;text-align:center;">
+            <div style="font-size:2rem;margin-bottom:0.5rem;">🎉</div>
+            <div style="color:#4CAF50;font-weight:700;font-size:1.1rem;">You're in!</div>
+            <div style="color:#ccc;font-size:0.9rem;margin-top:0.3rem;">Check your inbox for your first dose of DOAC wisdom.</div>
+        </div>
+        <script>
+        document.getElementById('nlBtn').addEventListener('click', function() {
+          var email = document.getElementById('nlEmail').value.trim();
+          if (!email || !email.includes('@')) return;
+          var iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = 'https://magic.beehiiv.com/v1/eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb?email=' + encodeURIComponent(email);
+          document.body.appendChild(iframe);
+          setTimeout(function(){ iframe.remove(); }, 3000);
+          document.getElementById('newsletterForm').style.display = 'none';
+          document.getElementById('newsletterSuccess').style.display = 'block';
+        });
+        </script>
+        <p class="newsletter-note">Join 2,847+ readers • Unsubscribe anytime</p>
     </div>
 
     <!-- Browse Episode Summaries Section -->
