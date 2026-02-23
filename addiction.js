@@ -154,7 +154,7 @@
       progressBar.innerHTML = `
         <div class="doac-progress-info">
           <span>${currentLevel.icon} Level: <strong>${currentLevel.name}</strong></span>
-          <span>${count}/600+ episodes explored</span>
+          <span>${count}/452 episodes explored</span>
         </div>
         <div class="doac-progress-bar"><div class="doac-progress-fill" style="width:${pct}%"></div></div>
         ${nextLevel ? `<small>Read ${nextLevel.min - count} more to reach ${nextLevel.icon} ${nextLevel.name}</small>` : '<small>🎉 Max level achieved!</small>'}
@@ -236,7 +236,8 @@
   // 6. LIVE READER COUNT ON EPISODES
   // ============================================
   function initLiveReaders() {
-    const episodeCards = document.querySelectorAll('a[href*="/episodes/"]');
+    // Only target episode links in content areas, not nav/header/breadcrumb
+    const episodeCards = document.querySelectorAll('.related-grid a[href*="/episodes/"], .episode-grid a[href*="/episodes/"], div[style*="grid"] > a[href*="/episodes/"]');
     episodeCards.forEach(card => {
       if (Math.random() > 0.4) { // 60% of cards get a badge
         const count = Math.floor(Math.random() * 89) + 12;
