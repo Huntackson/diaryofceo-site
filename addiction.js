@@ -246,8 +246,11 @@
     const badge = document.createElement('div');
     badge.className = 'doac-live-badge-float';
     badge.innerHTML = '🔥 ' + count + ' reading now';
-    // Homepage: bottom-right. Episode pages: bottom-left.
-    if (isEpisodePage) {
+    var isMobile = window.innerWidth < 768;
+    // Homepage: bottom-right. Episode pages: bottom-left. Mobile: always bottom-right, smaller.
+    if (isMobile) {
+      badge.style.cssText = 'position:fixed;bottom:10px;right:10px;z-index:9999;font-size:0.7rem;padding:4px 10px;';
+    } else if (isEpisodePage) {
       badge.style.cssText = 'position:fixed;bottom:20px;left:20px;z-index:9999;';
     } else {
       badge.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;';
@@ -456,9 +459,13 @@
 
     /* Mobile */
     @media (max-width: 768px) {
-      .doac-toast { bottom: 10px; left: 10px; right: 10px; max-width: none; }
+      .doac-toast { bottom: 10px; left: 10px; right: 10px; max-width: none; font-size: 0.8rem; padding: 8px 12px; }
       .doac-exit-form { flex-direction: column; }
       .doac-trending-section { padding: 0 1rem; }
+      .doac-live-badge-float { font-size: 0.7rem !important; padding: 4px 10px !important; bottom: 10px !important; right: 10px !important; }
+      .doac-progress { padding: 10px 14px; font-size: 0.8rem; }
+      .doac-daily-wisdom { padding: 14px 16px; margin: 0 1rem 1.5rem; }
+      .doac-daily-wisdom blockquote { font-size: 1rem; }
     }
   `;
   document.head.appendChild(style);
