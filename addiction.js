@@ -169,13 +169,20 @@
   // ============================================
   function initDailyWisdom() {
     const wisdoms = [
-      { quote: "You don't rise to your goals. You fall to your systems.", author: "James Clear theme" },
-      { quote: "The most important conversation you'll ever have is the one you have with yourself.", author: "Steven Bartlett" },
-      { quote: "Sleep is not a luxury. It's the foundation everything else is built on.", author: "Matthew Walker" },
-      { quote: "Your environment will always beat your willpower.", author: "Repeated across DOAC" },
-      { quote: "Most people overestimate what they can do in a day and underestimate what they can do in a year.", author: "Key DOAC theme" },
-      { quote: "The quality of your life is determined by the quality of your questions.", author: "Tony Robbins on DOAC" },
-      { quote: "Discipline is choosing between what you want now and what you want most.", author: "Key DOAC theme" },
+      { quote: "Atomic Habits: every action is a vote for the type of person you wish to become.", author: "James Clear", title: "Author of Atomic Habits" },
+      { quote: "The most important conversation you'll ever have is the one you have with yourself.", author: "Steven Bartlett", title: "Host of Diary of a CEO" },
+      { quote: "Sleep is the greatest legal performance-enhancing drug that most people are neglecting.", author: "Matthew Walker", title: "Neuroscientist & Sleep Expert" },
+      { quote: "By age 35, 95% of who you are is a memorized set of behaviors and emotional reactions.", author: "Dr. Joe Dispenza", title: "Neuroscientist & Author" },
+      { quote: "The hallmark of wisdom is knowing what you don't know. Intelligence is overrated.", author: "Adam Grant", title: "Organizational Psychologist" },
+      { quote: "If you want to master anything, you have to be willing to be bad at it first.", author: "Alex Hormozi", title: "Entrepreneur & Author" },
+      { quote: "Vulnerability is not weakness. It's our greatest measure of courage.", author: "Brene Brown", title: "Research Professor" },
+      { quote: "Your brain is lying to you. The thoughts you think are not always the truth.", author: "Dr. Daniel Amen", title: "Psychiatrist & Brain Disorder Specialist" },
+      { quote: "The way to seduce anyone is to make them feel like the most important person in the room.", author: "Robert Greene", title: "Author of The 48 Laws of Power" },
+      { quote: "Stress literally leaks through your skin via cortisol and is contagious to others.", author: "Dr. Tara Swart", title: "Neuroscientist" },
+      { quote: "The gap between where you are and where you want to be is closed by discipline, not motivation.", author: "Chris Williamson", title: "Podcaster & Author" },
+      { quote: "Never be yourself at work. Be a strategic version of yourself.", author: "Evy Poumpouras", title: "Former Secret Service Agent" },
+      { quote: "You cannot pour from an empty cup. Take care of yourself first.", author: "Dr. Julie Smith", title: "Clinical Psychologist" },
+      { quote: "The only way to do great work is to love what you do, and to keep iterating.", author: "Simon Sinek", title: "Author of Start With Why" },
     ];
     
     const dayIndex = Math.floor(Date.now() / 86400000) % wisdoms.length;
@@ -188,7 +195,7 @@
       banner.innerHTML = `
         <div class="doac-daily-label">💡 Today's Wisdom</div>
         <blockquote>"${wisdom.quote}"</blockquote>
-        <cite>— ${wisdom.author}</cite>
+        <cite>— ${wisdom.author}, ${wisdom.title}</cite>
       `;
       const newsletter = document.querySelector('.newsletter-section');
       if (newsletter) newsletter.parentNode.insertBefore(banner, newsletter);
@@ -212,7 +219,8 @@
             <button class="doac-exit-close" onclick="this.parentElement.parentElement.remove()">×</button>
             <h2>Wait! 🛑</h2>
             <p>You haven't seen today's #1 insight yet.</p>
-            <p style="font-size:1.1rem;color:#FFD700;margin:1rem 0;font-style:italic;">"The gap between where you are and where you want to be isn't knowledge — it's organized knowledge."</p>
+            <p style="font-size:1.1rem;color:#FFD700;margin:1rem 0;font-style:italic;">"By age 35, 95% of who you are is a memorized set of behaviors and emotional reactions."</p>
+            <p style="color:#aaa;font-size:0.85rem;">— Dr. Joe Dispenza, Neuroscientist & Author</p>
             <p>Get the best DOAC insights delivered weekly. Join 2,847+ readers.</p>
             <form class="doac-exit-form" name="exit-newsletter" method="POST" data-netlify="true">
               <input type="hidden" name="form-name" value="exit-newsletter">
