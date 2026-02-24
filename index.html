@@ -330,13 +330,12 @@
           e.preventDefault();
           var email = document.getElementById('nlEmail').value.trim();
           if (!email || !email.includes('@')) return false;
-          // Open Beehiiv subscribe in hidden iframe with correct subdomain
-          var iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = 'https://diaryofceo-87b0a5.beehiiv.com/subscribe?email=' + encodeURIComponent(email);
-          document.body.appendChild(iframe);
-          setTimeout(function(){ try{iframe.remove();}catch(ex){} }, 5000);
-          // Show success
+          // Disable button
+          var btn = document.getElementById('nlBtn');
+          btn.textContent = 'Subscribing...';
+          btn.disabled = true;
+          // Open Beehiiv subscribe page with email pre-filled (guaranteed delivery)
+          window.open('https://diaryofceo-87b0a5.beehiiv.com/subscribe?email=' + encodeURIComponent(email), '_blank');
           document.getElementById('newsletterForm').style.display = 'none';
           document.getElementById('newsletterSuccess').style.display = 'block';
           return false;
