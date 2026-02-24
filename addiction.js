@@ -508,7 +508,7 @@
     initStreakTracker();
     initProgressSystem();
     initDailyWisdom();
-    initExitIntent();
+    // initExitIntent(); // Disabled — too annoying
     initLiveReaders();
     initTrending();
     initNewsletterForms();
