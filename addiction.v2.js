@@ -468,32 +468,24 @@
     init();
   }
 
+  var BEEHIIV_PUB = 'eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb';
+  var BEEHIIV_EMBED = '<div style="display:flex;justify-content:center;"><iframe src="https://embeds.beehiiv.com/' + BEEHIIV_PUB + '?slim=true" data-test-id="beehiiv-embed" height="52" frameborder="0" scrolling="no" style="margin:0;border-radius:12px !important;background-color:transparent;width:100%;max-width:500px;"></iframe></div>';
+
   function initNewsletterForms() {
-    // Handle episode page newsletter CTAs (no <form> tag, just input+button in .newsletter-cta)
+    // Replace episode page newsletter CTAs with Beehiiv embed
     document.querySelectorAll('.newsletter-cta').forEach(function(cta) {
       var btn = cta.querySelector('button');
       var input = cta.querySelector('input[type="email"]');
       if (btn && input) {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          var email = input.value.trim();
-          if (!email || !email.includes('@')) { input.style.borderColor='#ff4444'; return; }
-          var subs = JSON.parse(localStorage.getItem('doac_subscribers') || '[]');
-          subs.push({email: email, ts: Date.now()});
-          localStorage.setItem('doac_subscribers', JSON.stringify(subs));
-          cta.innerHTML = '<div style="text-align:center;padding:1rem;"><div style="font-size:2rem;">🎉</div><div style="color:#4CAF50;font-weight:700;">You\'re in!</div><div style="color:#ccc;font-size:0.9rem;margin-top:0.3rem;">Check your inbox for your first dose of DOAC wisdom.</div></div>';
-        });
+        var wrapper = input.parentElement;
+        if (wrapper) wrapper.innerHTML = BEEHIIV_EMBED;
       }
     });
-    // Handle exit-intent form
+    // Handle exit-intent form — replace with embed
     document.addEventListener('submit', function(e) {
       if (e.target.classList.contains('doac-exit-form')) {
         e.preventDefault();
-        var email = e.target.querySelector('input[type="email"]').value;
-        var subs = JSON.parse(localStorage.getItem('doac_subscribers') || '[]');
-        subs.push({email: email, ts: Date.now(), source: 'exit-intent'});
-        localStorage.setItem('doac_subscribers', JSON.stringify(subs));
-        e.target.innerHTML = '<div style="color:#4CAF50;font-weight:700;font-size:1.1rem;">🎉 You\'re in! Check your inbox.</div>';
+        e.target.innerHTML = BEEHIIV_EMBED;
       }
     });
   }
