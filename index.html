@@ -330,27 +330,15 @@
           e.preventDefault();
           var email = document.getElementById('nlEmail').value.trim();
           if (!email || !email.includes('@')) return false;
-          // Try Beehiiv embed subscription endpoint
-          fetch('https://api.beehiiv.com/v2/publications/pub_eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb/subscriptions', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email: email, utm_source: 'website'})
-          }).catch(function(){});
-          // Also try the magic link as backup
+          // Open Beehiiv subscribe in hidden iframe with correct subdomain
           var iframe = document.createElement('iframe');
           iframe.style.display = 'none';
-          iframe.src = 'https://magic.beehiiv.com/v1/eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb?email=' + encodeURIComponent(email);
+          iframe.src = 'https://diaryofceo-87b0a5.beehiiv.com/subscribe?email=' + encodeURIComponent(email);
           document.body.appendChild(iframe);
           setTimeout(function(){ try{iframe.remove();}catch(ex){} }, 5000);
           // Show success
           document.getElementById('newsletterForm').style.display = 'none';
           document.getElementById('newsletterSuccess').style.display = 'block';
-          // Store locally as backup
-          try {
-            var subs = JSON.parse(localStorage.getItem('doac_subs') || '[]');
-            subs.push({email: email, ts: new Date().toISOString()});
-            localStorage.setItem('doac_subs', JSON.stringify(subs));
-          } catch(ex){}
           return false;
         }
         </script>

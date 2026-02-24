@@ -183,9 +183,10 @@ nav a{color:#aaa;font-size:.9rem}nav a:hover{color:#FFD700;text-decoration:none}
 <div class="cta">
 <h3>🎯 Get the Best Insights Weekly</h3>
 <p>We curate the top DOAC wisdom into a 5-minute weekly email. No fluff, just the takeaways that matter.</p>
-<div style="max-width:500px;margin:0 auto;display:flex;justify-content:center;">
-<iframe src="https://embeds.beehiiv.com/eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb?slim=true" data-test-id="beehiiv-embed" height="52" frameborder="0" scrolling="no" style="margin: 0; border-radius: 12px !important; background-color: transparent; width: 100%; max-width: 500px;"></iframe>
-</div>
+<form style="max-width:500px;margin:0 auto;display:flex;gap:0.75rem;" onsubmit="event.preventDefault();var e=this.querySelector('input').value.trim();if(!e)return;var f=document.createElement('iframe');f.style.display='none';f.src='https://diaryofceo-87b0a5.beehiiv.com/subscribe?email='+encodeURIComponent(e);document.body.appendChild(f);setTimeout(function(){f.remove()},5000);this.innerHTML='<div style=color:#4CAF50;font-weight:700;font-size:1.1rem;text-align:center;padding:1rem>🎉 You\\'re in! Check your inbox.</div>';">
+<input type="email" placeholder="Enter your email" required style="flex:1;padding:0.8rem 1rem;border-radius:10px;border:2px solid rgba(255,215,0,0.3);background:rgba(0,0,0,0.3);color:#fff;font-size:1rem;">
+<button type="submit" style="padding:0.8rem 1.5rem;border-radius:10px;border:none;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;font-weight:600;cursor:pointer;font-size:1rem;">Subscribe</button>
+</form>
 <p style="font-size:.8rem;color:#666;margin-top:.8rem">Join 2,847+ readers • Free forever</p>
 </div>
 
