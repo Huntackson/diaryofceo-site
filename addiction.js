@@ -171,7 +171,6 @@
   // 4. DAILY WISDOM BANNER
   // ============================================
   function initDailyWisdom() {
-    if (window.innerWidth < 768) return;
     const wisdoms = [
       { quote: "Atomic Habits: every action is a vote for the type of person you wish to become.", author: "James Clear", title: "Author of Atomic Habits" },
       { quote: "The most important conversation you'll ever have is the one you have with yourself.", author: "Steven Bartlett", title: "Host of Diary of a CEO" },
