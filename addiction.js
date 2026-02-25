@@ -252,7 +252,7 @@
     var isMobile = window.innerWidth < 768;
     // Homepage: bottom-right. Episode pages: bottom-left. Mobile: always bottom-right, smaller.
     if (isMobile) {
-      badge.style.cssText = 'position:fixed;bottom:10px;right:10px;z-index:9999;font-size:0.7rem;padding:4px 10px;';
+      badge.style.cssText = 'position:fixed;bottom:70px;right:10px;z-index:9999;font-size:0.7rem;padding:4px 10px;';
     } else if (isEpisodePage) {
       badge.style.cssText = 'position:fixed;bottom:20px;left:20px;z-index:9999;';
     } else {
