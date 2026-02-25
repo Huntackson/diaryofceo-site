@@ -259,17 +259,24 @@
             .header-content { flex-wrap: wrap; }
             .logo-text { font-size: 1.1rem; }
             .logo-icon { width: 40px; height: 40px; font-size: 1.4rem; }
-            .hero { padding: 2rem 1rem 1.5rem; }
-            .hero h1 { font-size: 1.6rem; }
-            .hero p { font-size: 0.9rem; }
+            /* Hide non-essential hero elements */
+            .hero-badge { display: none; }
+            .hero > p { display: none; }
+            .hero { padding: 1.5rem 1rem 1rem; }
+            .hero h1 { font-size: 1.4rem; }
             .hero br, .hero p br { display: none; }
-            .hero-badge { font-size: 0.8rem; padding: 0.4rem 1rem; }
-            .newsletter-section { padding: 1.5rem 1rem; margin: 0 1rem 2rem; }
-            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            /* Hide newsletter on mobile */
+            .newsletter-section { display: none; }
+            /* Show only 3 popular episodes */
+            .episode-grid-home > a:nth-child(n+4) { display: none; }
+            /* Show only 4 categories */
+            .categories-grid .category-card:nth-child(n+5) { display: none; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
             .category-card { padding: 1rem 0.5rem; }
             .category-icon { font-size: 2rem; }
-            .quotes-grid, .episodes-grid { grid-template-columns: 1fr; }
-            .content-section, .category-section { padding: 0 1rem 1.5rem; }
+            .category-section { padding: 1rem; }
+            .content-section { padding: 0 0.75rem; }
+            .quotes-grid, .episodes-grid { grid-template-columns: 1fr; gap: 1rem; }
             .stats { gap: 1rem; }
             .dashboard-overlay { padding: 1rem; }
             .top-lessons-section { padding: 1.5rem; }
@@ -350,7 +357,7 @@
             <h2 style="font-size:1.8rem;margin-bottom:0.5rem;">🔥 Most Popular Episodes</h2>
             <p style="color:#999;">The highest-viewed conversations — skip the 1.5-hour watch, get the key insights in minutes</p>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">
+        <div class="episode-grid-home" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">
             <a href="/episodes/robert-greene.html" style="background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.2rem;text-decoration:none;transition:all 0.3s;display:block;"><span style="color:#FFD700;font-weight:600;">Robert Greene</span> <span style="color:#888;font-size:0.75rem;">18M views</span><br><span style="color:#ccc;font-size:0.9rem;">How To Seduce Anyone, Build Confidence &amp; Become Powerful</span></a>
             <a href="/episodes/dr-tara-swart.html" style="background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.2rem;text-decoration:none;transition:all 0.3s;display:block;"><span style="color:#FFD700;font-weight:600;">Dr. Tara Swart</span> <span style="color:#888;font-size:0.75rem;">16M views</span><br><span style="color:#ccc;font-size:0.9rem;">Stress Leaks Through Skin, Is Contagious, Gives You Belly Fat!</span></a>
             <a href="/episodes/dr-joe-dispenza.html" style="background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.2rem;text-decoration:none;transition:all 0.3s;display:block;"><span style="color:#FFD700;font-weight:600;">Dr. Joe Dispenza</span> <span style="color:#888;font-size:0.75rem;">14M views</span><br><span style="color:#ccc;font-size:0.9rem;">You MUST Do This Before 10am!</span></a>

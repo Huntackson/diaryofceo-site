@@ -72,14 +72,17 @@
     }, 5000);
   }
 
-  // Show first toast after 8s, then every 20-40s
-  setTimeout(createToast, 8000);
-  setInterval(createToast, Math.floor(Math.random() * 20000) + 20000);
+  // Show first toast after 8s, then every 20-40s (disabled on mobile)
+  if (window.innerWidth >= 768) {
+    setTimeout(createToast, 8000);
+    setInterval(createToast, Math.floor(Math.random() * 20000) + 20000);
+  }
 
   // ============================================
   // 2. READING STREAK TRACKER (Loss Aversion)
   // ============================================
   function initStreakTracker() {
+    if (window.innerWidth < 768) return;
     const today = new Date().toDateString();
     const lastVisit = localStorage.getItem('doac_last_visit');
     let streak = parseInt(localStorage.getItem('doac_streak') || '0');
@@ -168,6 +171,7 @@
   // 4. DAILY WISDOM BANNER
   // ============================================
   function initDailyWisdom() {
+    if (window.innerWidth < 768) return;
     const wisdoms = [
       { quote: "Atomic Habits: every action is a vote for the type of person you wish to become.", author: "James Clear", title: "Author of Atomic Habits" },
       { quote: "The most important conversation you'll ever have is the one you have with yourself.", author: "Steven Bartlett", title: "Host of Diary of a CEO" },
