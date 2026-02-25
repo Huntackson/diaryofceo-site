@@ -254,14 +254,44 @@
         .main-nav a:first-child { color: #FFD700; font-weight: 600; }
         .hamburger { display: none; background: none; border: none; color: #FFD700; font-size: 1.8rem; cursor: pointer; padding: 0.25rem 0.5rem; line-height: 1; }
         
+        /* Bottom nav for mobile */
+        .bottom-nav { display: none; }
         @media (max-width: 768px) {
-            .hamburger { display: block; }
-            .main-nav { display: none; flex-direction: column; width: 100%; background: rgba(10,10,20,0.95); padding: 1rem 0; gap: 0.75rem; border-top: 1px solid rgba(255,215,0,0.2); }
-            .main-nav.open { display: flex; }
-            .header { padding: 0.75rem 1rem; }
-            .header-content { flex-wrap: wrap; }
-            .logo-text { font-size: 1.1rem; }
-            .logo-icon { width: 40px; height: 40px; font-size: 1.4rem; }
+            .hamburger { display: none; }
+            .main-nav { display: none !important; }
+            .header { padding: 0.5rem 1rem; }
+            .header-content { flex-wrap: nowrap; }
+            .logo-text { font-size: 1rem; }
+            .logo-icon { width: 36px; height: 36px; font-size: 1.2rem; }
+            body { padding-bottom: 64px; }
+            .bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 9999;
+                background: rgba(10, 10, 20, 0.97);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(255, 215, 0, 0.2);
+                padding: 6px 0 env(safe-area-inset-bottom, 6px);
+                justify-content: space-around;
+                align-items: center;
+            }
+            .bottom-nav a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2px;
+                color: #888;
+                text-decoration: none;
+                font-size: 0.65rem;
+                font-weight: 500;
+                padding: 4px 8px;
+                transition: color 0.2s;
+            }
+            .bottom-nav a.active { color: #FFD700; }
+            .bottom-nav a span.nav-icon { font-size: 1.3rem; line-height: 1; }
             /* Hide non-essential hero elements */
             .hero-badge { display: none; }
             .hero > p { display: none; }
@@ -714,5 +744,14 @@
     </script>
   <footer style="text-align:center;padding:2rem;color:#666;font-size:0.8rem;border-top:1px solid rgba(255,255,255,0.05);"><a href="/about.html" style="color:#FFD700;text-decoration:none;">About</a> · <a href="/episodes/" style="color:#FFD700;text-decoration:none;">All Episodes</a></footer>
   <script src="/addiction.js?v=3"></script>
+
+  <!-- Bottom Navigation (mobile only) -->
+  <nav class="bottom-nav">
+    <a href="/" class="active"><span class="nav-icon">🏠</span>Home</a>
+    <a href="/episodes/"><span class="nav-icon">🎙️</span>Episodes</a>
+    <a href="/topics/"><span class="nav-icon">📂</span>Topics</a>
+    <a href="/quotes.html"><span class="nav-icon">💬</span>Quotes</a>
+    <a href="/best-episodes.html"><span class="nav-icon">⭐</span>Best</a>
+  </nav>
 </body>
 </html>
