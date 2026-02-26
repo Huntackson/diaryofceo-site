@@ -370,31 +370,9 @@
     <div class="newsletter-section" id="newsletter">
         <h3>🎯 Get Weekly Wisdom (5 min read)</h3>
         <p>Every week, we distill the best insights from DOAC episodes into actionable takeaways. No fluff, just the wisdom that matters — delivered to your inbox.</p>
-        <div class="newsletter-form" style="display:flex;gap:8px;max-width:480px;margin:0 auto;">
-            <input type="email" id="nl-email" placeholder="Enter your email" style="flex:1;padding:1rem;font-size:1rem;background:rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.15);border-radius:12px;color:#fff;">
-            <button type="button" onclick="doacSubscribe()" style="padding:1rem 2rem;font-size:1rem;font-weight:600;background:linear-gradient(135deg,#FFD700,#FFA500);border:none;border-radius:12px;color:#000;cursor:pointer;white-space:nowrap;">Subscribe Free</button>
-        </div>
-        <p id="nl-msg" style="color:#FFD700;font-size:0.9rem;margin-top:0.8rem;min-height:20px;"></p>
-        <p class="newsletter-note">Join 10,000+ readers • Unsubscribe anytime</p>
+        <iframe src="https://embeds.beehiiv.com/eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb?slim=true" data-test-id="beehiiv-embed" height="52" frameborder="0" scrolling="no" style="margin:0;border-radius:0px!important;background-color:transparent;width:100%;max-width:480px;"></iframe>
+        <p class="newsletter-note">Free • Unsubscribe anytime</p>
     </div>
-    <script>
-    function doacSubscribe(){
-        var email=document.getElementById('nl-email').value;
-        var msg=document.getElementById('nl-msg');
-        var btn=document.querySelector('.newsletter-form button');
-        if(!email||email.indexOf('@')===-1){msg.style.color='#ff6b6b';msg.textContent='Please enter a valid email.';return;}
-        btn.disabled=true;btn.textContent='...';
-        fetch('https://newsletter-api.maxwellgrey014.workers.dev/subscribe',{
-            method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})
-        }).then(function(r){return r.json().then(function(d){return{ok:r.ok,data:d}})})
-        .then(function(res){
-            msg.style.color=res.ok?'#FFD700':'#ff6b6b';
-            msg.textContent=res.data.message||res.data.error;
-            if(res.ok)document.getElementById('nl-email').value='';
-        }).catch(function(){msg.style.color='#ff6b6b';msg.textContent='Something went wrong. Try again.';})
-        .finally(function(){btn.disabled=false;btn.textContent='Subscribe Free';});
-    }
-    </script>
 
     <!-- Browse Episode Summaries Section -->
     <div style="max-width:1400px;margin:0 auto 2rem;padding:0 2rem;">
