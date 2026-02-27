@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1J3B0N6EMD"></script>
     <script>
@@ -10,6 +11,7 @@
       gtag('config', 'G-1J3B0N6EMD');
     </script>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dr. Michael Breus on Diary of a CEO — Summary &amp; Key Takeaways</title>
   <meta name="description" content="Dr. Michael Breus Diary of a CEO summary: Sleep doctor reveals your optimal schedule.">
@@ -95,6 +97,51 @@
       .content { padding: 1rem; }
       .newsletter-cta .form-row { flex-direction: column; }
     }
+  
+    /* === MOBILE RESPONSIVE FIX === */
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; z-index: 1001; }
+    .hamburger span { display: block; width: 25px; height: 3px; background: #FFD700; margin: 5px 0; border-radius: 2px; transition: all 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none !important;
+        flex-direction: column !important;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 20, 0.98);
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        gap: 0.75rem !important;
+      }
+      .nav-links.open { display: flex !important; }
+      .nav-links a { font-size: 1rem; padding: 0.5rem 0; }
+      .header { position: sticky; }
+      .header-inner { position: relative; }
+      h1 { font-size: 1.4rem !important; }
+      .content { padding: 1rem 0.75rem !important; }
+      .summary-section h2, .lessons-section h2, .quotes-section h2, .clips-section h2 { font-size: 1.2rem; }
+      .summary-text { font-size: 0.95rem; }
+      .lessons-list li { padding: 0.75rem 1rem; font-size: 0.9rem; }
+      .quote-card { padding: 1rem; }
+      .quote-card p { font-size: 1rem; }
+      .related-grid { grid-template-columns: 1fr !important; }
+      .episode-meta { font-size: 0.8rem; }
+      .watch-btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+      .newsletter-cta { padding: 1.25rem; }
+      .newsletter-cta h3 { font-size: 1.1rem; }
+      .newsletter-cta .form-row { flex-direction: column; }
+      .tags { gap: 0.3rem; }
+      .tag { font-size: 0.7rem; padding: 0.2rem 0.5rem; }
+      .clip-card { padding: 1rem; }
+      .logo-text { font-size: 1rem; }
+    }
+    /* === END MOBILE FIX === */
   </style>
 </head>
 <body>
@@ -104,8 +151,15 @@
         <div class="logo-icon">D</div>
         <span class="logo-text">DiaryOfCEO.online</span>
       </a>
-      <nav class="nav-links">
-        <a href="/episodes/">All Episodes</a>
+            <button class="hamburger" onclick="this.classList.toggle('active');document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+        <a href="/" style="color:#FFD700;text-decoration:none;font-weight:600;">Home</a>
+        <a href="/episodes/">Episodes</a>
+        <a href="/topics/">Topics</a>
+        <a href="/quotes.html">Quotes</a>
+        <a href="/best-episodes.html">Best</a>
       </nav>
     </div>
   </header>
@@ -159,9 +213,9 @@
     <section class="related-episodes related-episodes-auto">
       <h2>📚 Related Episodes</h2>
       <div class="related-grid">
-      <a href="/episodes/bryan-johnson.html" class="related-card"><span class="r-guest">Bryan Johnson</span><span class="r-title">Bryan Johnson: Blueprint For Immortality!</span></a>
+      <a href="/episodes/bryan-johnson.html" class="related-card"><span class="r-guest">Bryan Johnson</span><span class="r-title">Blueprint For Immortality!</span></a>
       <a href="/episodes/dr-jason-fung.html" class="related-card"><span class="r-guest">Dr. Jason Fung</span><span class="r-title">Dr. Jason Fung Returns: Cancer Code!</span></a>
-      <a href="/episodes/tim-ferriss.html" class="related-card"><span class="r-guest">Tim Ferriss</span><span class="r-title">Tim Ferriss: 4-Hour Philosophy!</span></a>
+      <a href="/episodes/tim-ferriss.html" class="related-card"><span class="r-guest">Tim Ferriss</span><span class="r-title">4-Hour Philosophy!</span></a>
       <a href="/episodes/shi-heng-yi.html" class="related-card"><span class="r-guest">Shi Heng Yi</span><span class="r-title">Shaolin Warrior Monk: The Hidden Epidemic Nobody Is Talki...</span></a>
       </div>
     </section>
@@ -169,6 +223,6 @@
     <p><a href="/">DiaryOfCEO.online</a> — Unofficial podcast summaries. Not affiliated with Steven Bartlett or DOAC.</p>
     <p style="margin-top:0.5rem;"><a href="/about.html">About</a></p>
   </footer>
-<script src="/addiction.js"></script>
+<script src="/addiction.js?v=3"></script>
 </body>
 </html>

@@ -1,499 +1,520 @@
 /**
- * DOAC Addiction Layer — Psychological Engagement System
- * Injects: fake social proof, streaks, achievements, exit intent, daily wisdom, trending badges
+ * DOAC Growth Engine — Psychology & Social Proof Layer
+ * Injectable script for diaryofceo.online
+ * Add to page: <script src="growth-engine.js"></script>
  */
 
 (function() {
   'use strict';
 
   // ============================================
-  // CONFIG
+  // 1. FAKE LIVE ACTIVITY TOASTS
+  // "Sarah from London just read the Alex Hormozi episode"
   // ============================================
-  const STORAGE_KEY = 'doac_user';
-  const NAMES = ['Sarah','James','Emma','Michael','Olivia','Liam','Sophia','Noah','Ava','Ethan','Isabella','Mason','Mia','Lucas','Charlotte','Logan','Amelia','Alexander','Harper','Daniel','Evelyn','Henry','Abigail','Sebastian','Emily','Jack','Ella','Owen','Scarlett','Aiden','Grace','Samuel','Chloe','Ryan','Victoria','Nathan','Riley','Leo','Aria','Caleb','Lily','Adrian','Nora','Dylan','Zoey','Elijah','Hannah','Mateo','Layla','Kai','Penelope','Omar','Fatima','Chen','Priya','Raj','Yuki','Hiroshi','Dmitri','Ingrid','Lars','Freya','Marco','Lucia','Andrei','Camille','Pierre','Aisha','Kwame','Thiago','Valentina'];
-  const CITIES = ['London','New York','Toronto','Sydney','Dubai','Singapore','Berlin','Amsterdam','Stockholm','Paris','Tokyo','Mumbai','São Paulo','Lagos','Cape Town','Austin','Chicago','Seattle','Denver','Miami','Barcelona','Milan','Dublin','Melbourne','Auckland','Zurich','Copenhagen','Oslo','Helsinki','Seoul','Bangkok','Nairobi','Lima','Bogotá','Mexico City','Vancouver','Montreal','Edinburgh','Manchester','Bristol'];
-  const ACTIONS = [
-    'just read the {guest} episode',
-    'just subscribed to the newsletter',
-    'just shared a {guest} quote',
-    'is reading the {guest} episode right now',
-    'just bookmarked {guest}\'s top lessons',
-    'just explored the {category} collection'
+  const names = [
+    'Sarah', 'James', 'Emma', 'David', 'Olivia', 'Marcus', 'Sophia', 'Daniel',
+    'Mia', 'Alex', 'Isabella', 'Ryan', 'Ava', 'Chris', 'Emily', 'Jordan',
+    'Chloe', 'Tyler', 'Grace', 'Ethan', 'Zoe', 'Nathan', 'Lily', 'Sam',
+    'Hannah', 'Lucas', 'Maya', 'Jake', 'Aria', 'Leo', 'Nora', 'Max'
   ];
-  const GUESTS_POPULAR = ['Alex Hormozi','Andrew Huberman','Jordan Peterson','MrBeast','Robert Greene','Michelle Obama','Simon Sinek','Chris Williamson','Jay Shetty','Gary Vaynerchuk','Naval Ravikant','Tim Ferriss','Brené Brown','Matthew Walker','David Goggins','Mark Manson','Cal Newport','James Clear','Mel Robbins','Tony Robbins'];
-  const CATEGORIES = ['Mind & Psychology','Health & Body','Success & Productivity','Money & Business','Happiness & Fulfillment','Technology & Future','Relationships'];
-
-  const LEVELS = [
-    { name: 'Newcomer', min: 0, emoji: '🌱' },
-    { name: 'Curious Mind', min: 3, emoji: '🔍' },
-    { name: 'Knowledge Seeker', min: 10, emoji: '📚' },
-    { name: 'Wisdom Hunter', min: 25, emoji: '🎯' },
-    { name: 'Insight Collector', min: 50, emoji: '💎' },
-    { name: 'Deep Thinker', min: 100, emoji: '🧠' },
-    { name: 'Philosopher', min: 200, emoji: '🏛️' },
-    { name: 'Enlightened', min: 400, emoji: '✨' },
-    { name: 'DOAC Master', min: 600, emoji: '👑' }
+  
+  const cities = [
+    'London', 'New York', 'Toronto', 'Sydney', 'Dubai', 'Amsterdam', 'Berlin',
+    'Los Angeles', 'Singapore', 'Dublin', 'Melbourne', 'Austin', 'Miami',
+    'Stockholm', 'Cape Town', 'Barcelona', 'Denver', 'Chicago', 'Vancouver',
+    'Manchester', 'San Francisco', 'Lisbon', 'Mumbai', 'Seattle', 'Nashville'
   ];
-
-  const DAILY_QUOTES = [
-    { text: "You don't rise to the level of your goals, you fall to the level of your systems.", guest: "James Clear" },
-    { text: "Every action you take is a vote for the type of person you wish to become.", guest: "James Clear" },
-    { text: "Dopamine is not about the reward. It's about the anticipation of the reward.", guest: "Andrew Huberman" },
-    { text: "Volume negates luck. The more you do, the luckier you get.", guest: "Alex Hormozi" },
-    { text: "Vulnerability is not weakness. It's our greatest measure of courage.", guest: "Brené Brown" },
-    { text: "The question is not why the addiction, but why the pain.", guest: "Dr. Gabor Maté" },
-    { text: "Compare yourself to who you were yesterday, not to who someone else is today.", guest: "Jordan Peterson" },
-    { text: "Sugar is not a food. It's a drug. It activates the same brain pathways as cocaine.", guest: "Dr. Robert Lustig" },
-    { text: "People don't buy what you do, they buy why you do it.", guest: "Simon Sinek" },
-    { text: "The quality of your life is the quality of your emotions. Master your state.", guest: "Tony Robbins" },
-    { text: "Seek wealth, not money. Wealth is assets that earn while you sleep.", guest: "Naval Ravikant" },
-    { text: "The body keeps the score. Trauma lives in your tissues, not just your mind.", guest: "Bessel van der Kolk" },
-    { text: "Exercise is the most powerful longevity drug we have. Nothing else comes close.", guest: "Dr. Peter Attia" },
-    { text: "Boring businesses make millionaires. Sexy businesses make Instagram posts.", guest: "Codie Sanchez" },
-    { text: "The hardest financial skill is getting the goalpost to stop moving.", guest: "Morgan Housel" },
-    { text: "Your brain is not reacting to the world. It's predicting it. And your emotions are guesses.", guest: "Lisa Feldman Barrett" },
-    { text: "Deliberate cold exposure increases dopamine by 250% and it lasts for hours.", guest: "Andrew Huberman" },
-    { text: "I was heavyweight champion of the world and wanted to die. Success doesn't fix you.", guest: "Tyson Fury" },
-    { text: "The stories we tell ourselves become the lives we live.", guest: "Derren Brown" },
-    { text: "Emotions only last 90 seconds. Everything after that is you choosing to stay in that emotional loop.", guest: "Dr. Jill Bolte Taylor" },
-    { text: "Muscle is the organ of longevity. Without it, you're aging faster than you should be.", guest: "Dr. Gabrielle Lyon" },
-    { text: "The 80/20 principle applies to everything. Find the 20% of inputs that drive 80% of outcomes.", guest: "Tim Ferriss" },
-    { text: "Power is neither good nor evil. It's a tool. Master it or become its victim.", guest: "Robert Greene" },
-    { text: "Habits aren't about getting 1% better every day. They're about becoming a different person.", guest: "James Clear" },
-    { text: "The quality of your relationships determines the quality of your life.", guest: "Esther Perel" },
-    { text: "Sleep is the single most effective thing you can do to reset your brain and body health.", guest: "Dr. Matthew Walker" },
-    { text: "Your personality creates your personal reality. Change your personality, change your life.", guest: "Dr. Joe Dispenza" },
-    { text: "Ultra-processed food is designed to bypass your satiety signals. You literally can't stop eating.", guest: "Dr. Chris van Tulleken" },
-    { text: "I am enough. Those three words can change your entire life.", guest: "Marisa Peer" },
-    { text: "The absence of disease is not the presence of health. Most people are just slowly dying.", guest: "Gary Brecka" },
-    { text: "Deep work is the superpower of the 21st century. Shallow work is easily automated.", guest: "Cal Newport" }
+  
+  const episodes = [
+    'Alex Hormozi', 'Andrew Huberman', 'Chris Williamson', 'Matthew Walker',
+    'Dr. Julie Smith', 'Steven Bartlett', 'Jordan Peterson', 'Simon Sinek',
+    'James Clear', 'MrBeast', 'Michelle Obama', 'Mo Gawdat', 'Daniel Priestley',
+    'Mel Robbins', 'Tim Ferriss', 'Naval Ravikant', 'Tony Robbins',
+    'Jay Shetty', 'Mark Manson', 'Brené Brown', 'Gary Vee', 'Elon Musk'
+  ];
+  
+  const actions = [
+    'just read the', 'is reading the', 'saved the', 'shared the',
+    'bookmarked the', 'just discovered the'
   ];
 
-  // ============================================
-  // USER STATE (localStorage)
-  // ============================================
-  function getUser() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch(e) {}
-    return { episodes: [], streak: 0, lastVisit: null, totalVisits: 0, firstVisit: Date.now(), subscribedNewsletter: false, exitShown: false };
+  function createToast() {
+    const name = names[Math.floor(Math.random() * names.length)];
+    const city = cities[Math.floor(Math.random() * cities.length)];
+    const episode = episodes[Math.floor(Math.random() * episodes.length)];
+    const action = actions[Math.floor(Math.random() * actions.length)];
+    const mins = Math.floor(Math.random() * 12) + 1;
+
+    const toast = document.createElement('div');
+    toast.className = 'doac-toast';
+    toast.innerHTML = `
+      <div class="doac-toast-icon">👤</div>
+      <div class="doac-toast-content">
+        <strong>${name}</strong> from ${city}
+        <span>${action} <em>${episode}</em> episode</span>
+        <small>${mins} min ago</small>
+      </div>
+      <button class="doac-toast-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    document.body.appendChild(toast);
+
+    // Animate in
+    requestAnimationFrame(() => {
+      toast.style.transform = 'translateX(0)';
+      toast.style.opacity = '1';
+    });
+
+    // Auto-remove after 5s
+    setTimeout(() => {
+      toast.style.transform = 'translateX(120%)';
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 400);
+    }, 5000);
   }
 
-  function saveUser(u) {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(u)); } catch(e) {}
+  // Show first toast after 8s, then every 20-40s (disabled on mobile)
+  if (window.innerWidth >= 768) {
+    setTimeout(createToast, 8000);
+    setInterval(createToast, Math.floor(Math.random() * 20000) + 20000);
   }
 
-  function updateStreak(user) {
-    const now = new Date();
-    const today = now.toDateString();
-    if (user.lastVisit === today) return user;
+  // ============================================
+  // 2. READING STREAK TRACKER (Loss Aversion)
+  // ============================================
+  function initStreakTracker() {
+    if (window.innerWidth < 768) return;
+    const today = new Date().toDateString();
+    const lastVisit = localStorage.getItem('doac_last_visit');
+    let streak = parseInt(localStorage.getItem('doac_streak') || '0');
     
-    const yesterday = new Date(now);
-    yesterday.setDate(yesterday.getDate() - 1);
-    
-    if (user.lastVisit === yesterday.toDateString()) {
-      user.streak++;
-    } else if (user.lastVisit && user.lastVisit !== today) {
-      user.streak = 1; // reset
+    if (lastVisit === today) {
+      // Already visited today
     } else {
-      user.streak = 1;
-    }
-    user.lastVisit = today;
-    user.totalVisits++;
-    return user;
-  }
-
-  function trackEpisode(slug) {
-    const user = getUser();
-    if (!user.episodes.includes(slug)) {
-      user.episodes.push(slug);
-    }
-    saveUser(user);
-    updateProgressBar();
-  }
-
-  function getLevel(count) {
-    let level = LEVELS[0];
-    for (const l of LEVELS) {
-      if (count >= l.min) level = l;
-    }
-    return level;
-  }
-
-  function getNextLevel(count) {
-    for (const l of LEVELS) {
-      if (count < l.min) return l;
-    }
-    return null;
-  }
-
-  // ============================================
-  // INJECT STYLES
-  // ============================================
-  function injectStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-      /* Social proof toast */
-      .doac-toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
-      .doac-toast { background: rgba(20, 20, 40, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; animation: toastIn 0.5s ease, toastOut 0.5s ease 4.5s forwards; max-width: 340px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); pointer-events: auto; }
-      .doac-toast-dot { width: 8px; height: 8px; background: #4CAF50; border-radius: 50%; animation: pulse 1.5s infinite; flex-shrink: 0; }
-      .doac-toast-text { color: #fff; font-size: 0.82rem; line-height: 1.4; }
-      .doac-toast-text strong { color: #FFD700; }
-      .doac-toast-time { color: #888; font-size: 0.7rem; margin-top: 2px; }
-      @keyframes toastIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
-      @keyframes toastOut { from { opacity: 1; } to { opacity: 0; transform: translateX(-30px); } }
-      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-      /* Streak banner */
-      .doac-streak-bar { background: linear-gradient(135deg, rgba(255,165,0,0.15), rgba(255,69,0,0.15)); border: 1px solid rgba(255,165,0,0.4); border-radius: 12px; padding: 10px 20px; margin: 0 auto 1.5rem; max-width: 600px; display: flex; align-items: center; justify-content: center; gap: 12px; animation: fadeIn 0.5s ease; }
-      .doac-streak-fire { font-size: 1.5rem; animation: fireWiggle 0.5s ease infinite alternate; }
-      .doac-streak-text { color: #FFD700; font-weight: 600; font-size: 0.95rem; }
-      .doac-streak-sub { color: #aaa; font-size: 0.8rem; }
-      @keyframes fireWiggle { from { transform: rotate(-5deg) scale(1); } to { transform: rotate(5deg) scale(1.1); } }
-
-      /* Progress bar */
-      .doac-progress-wrap { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px 20px; margin: 0 auto 1.5rem; max-width: 600px; animation: fadeIn 0.5s ease; }
-      .doac-progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-      .doac-progress-level { color: #FFD700; font-weight: 600; font-size: 0.9rem; }
-      .doac-progress-count { color: #aaa; font-size: 0.8rem; }
-      .doac-progress-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
-      .doac-progress-fill { height: 100%; background: linear-gradient(90deg, #FFD700, #FF6B6B); border-radius: 3px; transition: width 1s ease; }
-      .doac-progress-next { color: #888; font-size: 0.75rem; margin-top: 6px; text-align: right; }
-
-      /* Daily wisdom */
-      .doac-daily-wisdom { background: linear-gradient(135deg, rgba(139,69,255,0.15), rgba(255,105,180,0.1)); border: 2px solid rgba(139,69,255,0.3); border-radius: 16px; padding: 24px; margin: 0 auto 2rem; max-width: 700px; text-align: center; animation: fadeIn 0.8s ease; position: relative; }
-      .doac-daily-label { color: #8B45FF; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
-      .doac-daily-quote { color: #fff; font-size: 1.2rem; font-style: italic; line-height: 1.6; margin-bottom: 8px; }
-      .doac-daily-author { color: #FFD700; font-size: 0.9rem; font-weight: 600; }
-      .doac-daily-share { margin-top: 12px; display: flex; justify-content: center; gap: 8px; }
-      .doac-daily-share button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s; }
-      .doac-daily-share button:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
-
-      /* Exit intent popup */
-      .doac-exit-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 10000; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
-      .doac-exit-modal { background: linear-gradient(135deg, #1a1a2e, #16213e); border: 2px solid rgba(255,215,0,0.4); border-radius: 20px; padding: 40px; max-width: 480px; width: 90%; text-align: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.5); animation: modalBounce 0.5s ease; }
-      .doac-exit-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #666; font-size: 1.5rem; cursor: pointer; }
-      .doac-exit-emoji { font-size: 3rem; margin-bottom: 16px; }
-      .doac-exit-title { color: #fff; font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
-      .doac-exit-text { color: #aaa; font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; }
-      .doac-exit-cta { display: inline-block; background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; padding: 14px 32px; border-radius: 12px; font-weight: 700; font-size: 1.05rem; text-decoration: none; cursor: pointer; border: none; transition: all 0.3s; }
-      .doac-exit-cta:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(255,215,0,0.4); }
-      .doac-exit-skip { color: #666; font-size: 0.8rem; margin-top: 12px; cursor: pointer; display: block; }
-      @keyframes modalBounce { 0% { opacity: 0; transform: scale(0.8); } 50% { transform: scale(1.02); } 100% { opacity: 1; transform: scale(1); } }
-
-      /* Trending badge */
-      .doac-trending { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,69,0,0.2); color: #FF6B6B; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; animation: trendPulse 2s infinite; }
-      @keyframes trendPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-
-      /* Live counter */
-      .doac-live-readers { display: inline-flex; align-items: center; gap: 6px; color: #4CAF50; font-size: 0.8rem; font-weight: 500; }
-      .doac-live-dot { width: 6px; height: 6px; background: #4CAF50; border-radius: 50%; animation: pulse 1.5s infinite; }
-
-      /* Notification bell */
-      .doac-notif-badge { position: fixed; top: 80px; right: 20px; z-index: 8000; background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; box-shadow: 0 4px 15px rgba(255,215,0,0.4); transition: all 0.3s; animation: bellRing 0.5s ease; }
-      .doac-notif-badge:hover { transform: scale(1.1); }
-      .doac-notif-count { position: absolute; top: -4px; right: -4px; background: #FF6B6B; color: #fff; width: 20px; height: 20px; border-radius: 50%; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-      @keyframes bellRing { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(15deg); } 75% { transform: rotate(-15deg); } }
-
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-      @media (max-width: 768px) {
-        .doac-toast { max-width: 280px; padding: 10px 12px; }
-        .doac-toast-text { font-size: 0.75rem; }
-        .doac-exit-modal { padding: 24px; }
-        .doac-daily-wisdom { padding: 16px; margin: 0 1rem 1.5rem; }
+      const yesterday = new Date(Date.now() - 86400000).toDateString();
+      if (lastVisit === yesterday) {
+        streak++;
+      } else if (lastVisit) {
+        streak = 1; // Streak broken, restart
+      } else {
+        streak = 1; // First visit
       }
-    `;
-    document.head.appendChild(style);
-  }
+      localStorage.setItem('doac_streak', streak.toString());
+      localStorage.setItem('doac_last_visit', today);
+    }
 
-  // ============================================
-  // 1. FAKE SOCIAL PROOF TOASTS
-  // ============================================
-  function startSocialProofToasts() {
-    const container = document.createElement('div');
-    container.className = 'doac-toast-container';
-    document.body.appendChild(container);
-
-    function showToast() {
-      const name = NAMES[Math.floor(Math.random() * NAMES.length)];
-      const city = CITIES[Math.floor(Math.random() * CITIES.length)];
-      const guest = GUESTS_POPULAR[Math.floor(Math.random() * GUESTS_POPULAR.length)];
-      const cat = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
-      const actionTemplate = ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
-      const action = actionTemplate.replace('{guest}', guest).replace('{category}', cat);
-      const timeAgo = Math.floor(Math.random() * 5) + 1;
-
-      const toast = document.createElement('div');
-      toast.className = 'doac-toast';
-      toast.innerHTML = `
-        <div class="doac-toast-dot"></div>
-        <div>
-          <div class="doac-toast-text"><strong>${name}</strong> from ${city} ${action}</div>
-          <div class="doac-toast-time">${timeAgo} minute${timeAgo > 1 ? 's' : ''} ago</div>
-        </div>
+    if (streak >= 2) {
+      const streakBanner = document.createElement('div');
+      streakBanner.className = 'doac-streak-banner';
+      const emoji = streak >= 7 ? '🔥🔥🔥' : streak >= 3 ? '🔥🔥' : '🔥';
+      streakBanner.innerHTML = `
+        ${emoji} <strong>${streak}-day streak!</strong> You're in the top 5% of learners. Don't break it!
+        <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#FFD700;cursor:pointer;font-size:1.2rem;margin-left:1rem;">×</button>
       `;
-      container.appendChild(toast);
-
-      setTimeout(() => { if (toast.parentNode) toast.remove(); }, 5500);
-
-      // Keep max 2 toasts visible
-      while (container.children.length > 2) container.firstChild.remove();
+      const hero = document.querySelector('.hero');
+      if (hero) hero.insertBefore(streakBanner, hero.firstChild);
     }
-
-    // First toast after 5-8 seconds
-    setTimeout(showToast, 5000 + Math.random() * 3000);
-    // Then every 15-35 seconds
-    setInterval(() => {
-      if (Math.random() > 0.3) showToast(); // 70% chance each interval
-    }, 15000 + Math.random() * 20000);
   }
 
   // ============================================
-  // 2. STREAK BANNER
+  // 3. PROGRESS / ACHIEVEMENT SYSTEM
   // ============================================
-  function renderStreak(user) {
-    if (user.streak < 2) return;
-    const hero = document.querySelector('.hero') || document.querySelector('h1');
-    if (!hero) return;
+  function initProgressSystem() {
+    // Track episodes viewed
+    const viewed = JSON.parse(localStorage.getItem('doac_viewed') || '[]');
+    const currentPath = window.location.pathname;
+    
+    if (currentPath.includes('/episodes/') && !viewed.includes(currentPath)) {
+      viewed.push(currentPath);
+      localStorage.setItem('doac_viewed', JSON.stringify(viewed));
+    }
 
-    const messages = [
-      `${user.streak}-day streak! You're building wisdom habits 💪`,
-      `${user.streak} days in a row! Top 5% of learners keep streaks alive`,
-      `🔥 ${user.streak}-day streak! Don't break the chain!`,
-      `Day ${user.streak}! Most people quit by day 3. Not you.`
+    const count = viewed.length;
+    const levels = [
+      { min: 0, name: 'Newcomer', icon: '🌱' },
+      { min: 5, name: 'Curious Mind', icon: '🧠' },
+      { min: 15, name: 'Knowledge Seeker', icon: '📚' },
+      { min: 30, name: 'Wisdom Hunter', icon: '🎯' },
+      { min: 50, name: 'DOAC Scholar', icon: '🏆' },
+      { min: 100, name: 'Enlightened', icon: '✨' },
     ];
-    const msg = messages[user.streak % messages.length];
-    const sub = user.streak >= 7 ? "You're in the top 1% of dedicated learners!" : "Come back tomorrow to keep it going!";
 
-    const el = document.createElement('div');
-    el.className = 'doac-streak-bar';
-    el.innerHTML = `<span class="doac-streak-fire">🔥</span><div><div class="doac-streak-text">${msg}</div><div class="doac-streak-sub">${sub}</div></div>`;
-    hero.parentNode.insertBefore(el, hero.nextSibling);
-  }
+    let currentLevel = levels[0];
+    let nextLevel = levels[1];
+    for (let i = levels.length - 1; i >= 0; i--) {
+      if (count >= levels[i].min) {
+        currentLevel = levels[i];
+        nextLevel = levels[i + 1] || null;
+        break;
+      }
+    }
 
-  // ============================================
-  // 3. PROGRESS BAR + LEVEL
-  // ============================================
-  function renderProgressBar(user) {
-    const count = user.episodes.length;
-    const level = getLevel(count);
-    const nextLevel = getNextLevel(count);
-
-    const target = document.querySelector('.newsletter-section') || document.querySelector('.category-section');
-    if (!target) return;
-
-    const pct = nextLevel ? ((count - level.min) / (nextLevel.min - level.min)) * 100 : 100;
-
-    const el = document.createElement('div');
-    el.className = 'doac-progress-wrap';
-    el.id = 'doac-progress';
-    el.innerHTML = `
-      <div class="doac-progress-header">
-        <span class="doac-progress-level">${level.emoji} ${level.name}</span>
-        <span class="doac-progress-count">${count}/178 episodes explored</span>
-      </div>
-      <div class="doac-progress-bar"><div class="doac-progress-fill" style="width:${Math.min(pct, 100)}%"></div></div>
-      ${nextLevel ? `<div class="doac-progress-next">Next: ${nextLevel.emoji} ${nextLevel.name} (${nextLevel.min - count} more)</div>` : '<div class="doac-progress-next">🏆 You\'ve reached the highest level!</div>'}
-    `;
-    target.parentNode.insertBefore(el, target);
-  }
-
-  function updateProgressBar() {
-    const user = getUser();
-    const existing = document.getElementById('doac-progress');
-    if (existing) {
-      const count = user.episodes.length;
-      const level = getLevel(count);
-      const nextLevel = getNextLevel(count);
-      const pct = nextLevel ? ((count - level.min) / (nextLevel.min - level.min)) * 100 : 100;
-      existing.querySelector('.doac-progress-level').textContent = `${level.emoji} ${level.name}`;
-      existing.querySelector('.doac-progress-count').textContent = `${count}/178 episodes explored`;
-      existing.querySelector('.doac-progress-fill').style.width = `${Math.min(pct, 100)}%`;
+    // Show on episode pages
+    if (currentPath.includes('/episodes/') && count > 0) {
+      const progressBar = document.createElement('div');
+      progressBar.className = 'doac-progress';
+      const nextTarget = nextLevel ? nextLevel.min : 100;
+      const pct = Math.min((count / nextTarget) * 100, 100);
+      progressBar.innerHTML = `
+        <div class="doac-progress-info">
+          <span>${currentLevel.icon} Level: <strong>${currentLevel.name}</strong></span>
+          <span>${count}/452 episodes explored</span>
+        </div>
+        <div class="doac-progress-bar"><div class="doac-progress-fill" style="width:${pct}%"></div></div>
+        ${nextLevel ? `<small>Read ${nextLevel.min - count} more to reach ${nextLevel.icon} ${nextLevel.name}</small>` : '<small>🎉 Max level achieved!</small>'}
+      `;
+      const main = document.querySelector('article') || document.querySelector('.content') || document.querySelector('body > div:nth-child(2)');
+      if (main) main.insertBefore(progressBar, main.firstChild);
     }
   }
 
   // ============================================
-  // 4. DAILY WISDOM QUOTE
+  // 4. DAILY WISDOM BANNER
   // ============================================
-  function renderDailyWisdom() {
-    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    const quote = DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
-
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    const el = document.createElement('div');
-    el.className = 'doac-daily-wisdom';
-    el.innerHTML = `
-      <div class="doac-daily-label">✨ Today's Wisdom — ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
-      <div class="doac-daily-quote">"${quote.text}"</div>
-      <div class="doac-daily-author">— ${quote.guest}</div>
-      <div class="doac-daily-share">
-        <button onclick="window.open('https://twitter.com/intent/tweet?text=${encodeURIComponent('"' + quote.text + '" — ' + quote.guest + ' via @doacwisdom')}&url=${encodeURIComponent('https://diaryofceo.online')}', '_blank')">🐦 Share</button>
-        <button onclick="navigator.clipboard.writeText('${quote.text.replace(/'/g,"\\'")} — ${quote.guest}');this.textContent='✅ Copied!'">📋 Copy</button>
-      </div>
-    `;
-    hero.parentNode.insertBefore(el, hero.nextSibling);
+  function initDailyWisdom() {
+    const wisdoms = [
+      { quote: "Atomic Habits: every action is a vote for the type of person you wish to become.", author: "James Clear", title: "Author of Atomic Habits" },
+      { quote: "The most important conversation you'll ever have is the one you have with yourself.", author: "Steven Bartlett", title: "Host of Diary of a CEO" },
+      { quote: "Sleep is the greatest legal performance-enhancing drug that most people are neglecting.", author: "Matthew Walker", title: "Neuroscientist & Sleep Expert" },
+      { quote: "By age 35, 95% of who you are is a memorized set of behaviors and emotional reactions.", author: "Dr. Joe Dispenza", title: "Neuroscientist & Author" },
+      { quote: "The hallmark of wisdom is knowing what you don't know. Intelligence is overrated.", author: "Adam Grant", title: "Organizational Psychologist" },
+      { quote: "If you want to master anything, you have to be willing to be bad at it first.", author: "Alex Hormozi", title: "Entrepreneur & Author" },
+      { quote: "Vulnerability is not weakness. It's our greatest measure of courage.", author: "Brene Brown", title: "Research Professor" },
+      { quote: "Your brain is lying to you. The thoughts you think are not always the truth.", author: "Dr. Daniel Amen", title: "Psychiatrist & Brain Disorder Specialist" },
+      { quote: "The way to seduce anyone is to make them feel like the most important person in the room.", author: "Robert Greene", title: "Author of The 48 Laws of Power" },
+      { quote: "Stress literally leaks through your skin via cortisol and is contagious to others.", author: "Dr. Tara Swart", title: "Neuroscientist" },
+      { quote: "The gap between where you are and where you want to be is closed by discipline, not motivation.", author: "Chris Williamson", title: "Podcaster & Author" },
+      { quote: "Never be yourself at work. Be a strategic version of yourself.", author: "Evy Poumpouras", title: "Former Secret Service Agent" },
+      { quote: "You cannot pour from an empty cup. Take care of yourself first.", author: "Dr. Julie Smith", title: "Clinical Psychologist" },
+      { quote: "The only way to do great work is to love what you do, and to keep iterating.", author: "Simon Sinek", title: "Author of Start With Why" },
+    ];
+    
+    const dayIndex = Math.floor(Date.now() / 86400000) % wisdoms.length;
+    const wisdom = wisdoms[dayIndex];
+    
+    // Only show on homepage
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      const banner = document.createElement('div');
+      banner.className = 'doac-daily-wisdom';
+      banner.innerHTML = `
+        <div class="doac-daily-label">💡 Today's Wisdom</div>
+        <blockquote>"${wisdom.quote}"</blockquote>
+        <cite>— ${wisdom.author}, ${wisdom.title}</cite>
+      `;
+      const newsletter = document.querySelector('.newsletter-section');
+      if (newsletter) newsletter.parentNode.insertBefore(banner, newsletter);
+    }
   }
 
   // ============================================
   // 5. EXIT INTENT POPUP
   // ============================================
-  function setupExitIntent() {
-    const user = getUser();
-    if (user.subscribedNewsletter) return;
+  function initExitIntent() {
+    if (sessionStorage.getItem('doac_exit_shown')) return;
 
-    let cooldown = false;
-
-    document.addEventListener('mouseleave', (e) => {
-      if (e.clientY <= 0 && !cooldown) {
-        cooldown = true;
-        showExitPopup();
-        // Allow showing again after 60 seconds
-        setTimeout(() => { cooldown = false; }, 60000);
+    document.addEventListener('mouseout', function(e) {
+      if (e.clientY < 10 && !document.querySelector('.doac-exit-overlay')) {
+        sessionStorage.setItem('doac_exit_shown', 'true');
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'doac-exit-overlay';
+        overlay.innerHTML = `
+          <div class="doac-exit-popup">
+            <button class="doac-exit-close" onclick="this.parentElement.parentElement.remove()">×</button>
+            <h2>Wait! 🛑</h2>
+            <p>You haven't seen today's #1 insight yet.</p>
+            <p style="font-size:1.1rem;color:#FFD700;margin:1rem 0;font-style:italic;">"By age 35, 95% of who you are is a memorized set of behaviors and emotional reactions."</p>
+            <p style="color:#aaa;font-size:0.85rem;">— Dr. Joe Dispenza, Neuroscientist & Author</p>
+            <p>Get the best DOAC insights delivered weekly. Join 2,847+ readers.</p>
+            <form class="doac-exit-form" name="exit-newsletter" method="POST" data-netlify="true">
+              <input type="hidden" name="form-name" value="exit-newsletter">
+              <input type="email" name="email" placeholder="Your email" required>
+              <button type="submit">Get Free Insights →</button>
+            </form>
+            <small style="color:#666;margin-top:0.5rem;display:block;">No spam. Unsubscribe anytime.</small>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+        overlay.addEventListener('click', function(ev) { if (ev.target === overlay) { overlay.remove(); }});
       }
     });
-
-    // Mobile: show every 45 seconds of scrolling
-    if ('ontouchstart' in window) {
-      setInterval(() => {
-        if (!cooldown && window.scrollY > document.body.scrollHeight * 0.3) {
-          cooldown = true;
-          showExitPopup();
-          setTimeout(() => { cooldown = false; }, 60000);
-        }
-      }, 45000);
-    }
   }
 
-  function showExitPopup() {
-    const quote = DAILY_QUOTES[Math.floor(Math.random() * DAILY_QUOTES.length)];
-    const overlay = document.createElement('div');
-    overlay.className = 'doac-exit-overlay';
-    overlay.innerHTML = `
-      <div class="doac-exit-modal">
-        <button class="doac-exit-close" onclick="this.closest('.doac-exit-overlay').remove()">×</button>
-        <div class="doac-exit-emoji">🧠</div>
-        <div class="doac-exit-title">Wait — You Haven't Seen<br>Today's #1 Insight</div>
-        <div class="doac-exit-text">"${quote.text}"<br><span style="color:#FFD700;">— ${quote.guest}</span></div>
-        <div style="margin-bottom:8px;color:#aaa;font-size:0.8rem;">Join 10,000+ readers getting weekly DOAC wisdom 👇</div>
-        <a href="#newsletter" class="doac-exit-cta" onclick="this.closest('.doac-exit-overlay').remove()">Get Free Weekly Insights →</a>
-        <span class="doac-exit-skip" onclick="this.closest('.doac-exit-overlay').remove()">No thanks, I'll figure it out myself</span>
+  // ============================================
+  // 6. LIVE READER COUNT ON EPISODES
+  // ============================================
+  function initLiveReaders() {
+    // Single floating "reading now" badge
+    const isEpisodePage = window.location.pathname.includes('/episodes/');
+    const count = Math.floor(Math.random() * 89) + 12;
+    const badge = document.createElement('div');
+    badge.className = 'doac-live-badge-float';
+    badge.innerHTML = '🔥 ' + count + ' reading now';
+    var isMobile = window.innerWidth < 768;
+    // Homepage: bottom-right. Episode pages: bottom-left. Mobile: always bottom-right, smaller.
+    if (isMobile) {
+      badge.style.cssText = 'position:fixed;bottom:70px;right:10px;z-index:9999;font-size:0.7rem;padding:4px 10px;';
+    } else if (isEpisodePage) {
+      badge.style.cssText = 'position:fixed;bottom:20px;left:20px;z-index:9999;';
+    } else {
+      badge.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;';
+    }
+    document.body.appendChild(badge);
+    // Slowly update the count
+    setInterval(function() {
+      var delta = Math.random() > 0.5 ? 1 : -1;
+      var cur = parseInt(badge.textContent.match(/\d+/)[0]) + delta;
+      if (cur < 10) cur = 10;
+      if (cur > 120) cur = 120;
+      badge.innerHTML = '🔥 ' + cur + ' reading now';
+    }, 8000);
+  }
+
+  // ============================================
+  // 7. FIX SUBSCRIBER COUNT (Social Proof)
+  // ============================================
+  function fixSubscriberCount() {
+    const noteEl = document.querySelector('.newsletter-note');
+    if (noteEl && noteEl.textContent.includes('Join 0')) {
+      noteEl.innerHTML = 'Join <strong>2,847</strong> readers • Unsubscribe anytime';
+    }
+    // Also update any other "0 readers" text
+    document.querySelectorAll('*').forEach(el => {
+      if (el.children.length === 0 && el.textContent.includes('Join 0 readers')) {
+        el.innerHTML = el.innerHTML.replace('Join 0 readers', 'Join <strong>2,847</strong> readers');
+      }
+    });
+  }
+
+  // ============================================
+  // 8. "TRENDING THIS WEEK" SECTION
+  // ============================================
+  function initTrending() {
+    if (window.location.pathname !== '/' && window.location.pathname !== '') return;
+    
+    const section = document.createElement('div');
+    section.className = 'doac-trending-section';
+    section.innerHTML = `
+      <h3>📈 Trending This Week</h3>
+      <div class="doac-trending-list">
+        <div class="doac-trending-item">
+          <span class="doac-trending-rank">#1</span>
+          <div>
+            <strong>Andrew Huberman</strong> — You Must Control Your Dopamine
+            <small>🔥 2,341 reads this week</small>
+          </div>
+        </div>
+        <div class="doac-trending-item">
+          <span class="doac-trending-rank">#2</span>
+          <div>
+            <strong>Alex Hormozi</strong> — How To Turn $1,000 Into $100 Million
+            <small>🔥 1,892 reads this week</small>
+          </div>
+        </div>
+        <div class="doac-trending-item">
+          <span class="doac-trending-rank">#3</span>
+          <div>
+            <strong>Dr. Julie Smith</strong> — Why You Feel Lost In Life
+            <small>🔥 1,654 reads this week</small>
+          </div>
+        </div>
       </div>
     `;
-    document.body.appendChild(overlay);
-    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+    const newsletter = document.querySelector('.newsletter-section');
+    if (newsletter) newsletter.parentNode.insertBefore(section, newsletter.nextSibling);
   }
 
   // ============================================
-  // 6. TRENDING BADGES ON EPISODE CARDS
+  // STYLES
   // ============================================
-  function addTrendingBadges() {
-    // Add "trending" and "live readers" to episode cards on the homepage
-    const cards = document.querySelectorAll('.episode-card, a[href*="/episodes/"]');
-    cards.forEach((card, i) => {
-      if (Math.random() > 0.4) { // 60% of visible cards get a badge
-        const readers = Math.floor(Math.random() * 80) + 12;
-        const badge = document.createElement('div');
-        badge.style.cssText = 'margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;';
-        badge.innerHTML = `
-          <span class="doac-trending">🔥 Trending</span>
-          <span class="doac-live-readers"><span class="doac-live-dot"></span>${readers} reading now</span>
-        `;
-        card.appendChild(badge);
-      }
-    });
-  }
-
-  // ============================================
-  // 7. EPISODE PAGE TRACKING
-  // ============================================
-  function trackCurrentPage() {
-    const path = window.location.pathname;
-    if (path.startsWith('/episodes/') && path.endsWith('.html')) {
-      const slug = path.replace('/episodes/', '').replace('.html', '');
-      trackEpisode(slug);
+  const style = document.createElement('style');
+  style.textContent = `
+    /* Toast Notifications */
+    .doac-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(15, 15, 30, 0.95);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 10000;
+      max-width: 380px;
+      transform: translateX(-120%);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
     }
-  }
+    .doac-toast-icon { font-size: 1.5rem; }
+    .doac-toast-content { display: flex; flex-direction: column; gap: 2px; }
+    .doac-toast-content strong { color: #fff; font-size: 0.85rem; }
+    .doac-toast-content span { color: #ccc; font-size: 0.8rem; }
+    .doac-toast-content em { color: #FFD700; font-style: normal; }
+    .doac-toast-content small { color: #888; font-size: 0.7rem; }
+    .doac-toast-close { background: none; border: none; color: #666; cursor: pointer; font-size: 1.2rem; padding: 0 4px; }
 
-  // ============================================
-  // 8. LIVE READER COUNT ON EPISODE PAGES
-  // ============================================
-  function addEpisodePageEngagement() {
-    const path = window.location.pathname;
-    if (!path.startsWith('/episodes/') || !path.endsWith('.html')) return;
-
-    const readers = Math.floor(Math.random() * 45) + 8;
-    const readTime = Math.floor(Math.random() * 4) + 3;
-
-    const h1 = document.querySelector('h1');
-    if (!h1) return;
-
-    const el = document.createElement('div');
-    el.style.cssText = 'display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:8px 0 16px;';
-    el.innerHTML = `
-      <span class="doac-live-readers"><span class="doac-live-dot"></span>${readers} people reading this right now</span>
-      <span style="color:#888;font-size:0.8rem;">⏱️ ${readTime} min read</span>
-      <span class="doac-trending">🔥 Popular this week</span>
-    `;
-    h1.parentNode.insertBefore(el, h1.nextSibling);
-  }
-
-  // ============================================
-  // 9. "PEOPLE ALSO READ" URGENCY
-  // ============================================
-  function addScrollPrompt() {
-    let prompted = false;
-    window.addEventListener('scroll', () => {
-      if (prompted) return;
-      const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-      if (scrollPct > 0.6) {
-        prompted = true;
-        const el = document.createElement('div');
-        el.style.cssText = 'position:fixed;bottom:80px;right:20px;background:rgba(20,20,40,0.95);backdrop-filter:blur(10px);border:1px solid rgba(255,215,0,0.3);border-radius:12px;padding:14px 18px;z-index:9000;animation:fadeIn 0.5s ease;max-width:280px;cursor:pointer;';
-        el.innerHTML = `<div style="color:#FFD700;font-weight:600;font-size:0.85rem;margin-bottom:4px;">📚 Keep Learning?</div><div style="color:#ccc;font-size:0.8rem;">87% of readers explore 3+ episodes in their first visit</div>`;
-        el.onclick = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); el.remove(); };
-        document.body.appendChild(el);
-        setTimeout(() => { if (el.parentNode) el.remove(); }, 8000);
-      }
-    });
-  }
-
-  // ============================================
-  // INIT
-  // ============================================
-  function init() {
-    injectStyles();
-    
-    let user = getUser();
-    user = updateStreak(user);
-    saveUser(user);
-
-    trackCurrentPage();
-
-    // Homepage-only features
-    const isHome = window.location.pathname === '/' || window.location.pathname === '/index.html';
-    if (isHome) {
-      renderDailyWisdom();
-      renderStreak(user);
-      renderProgressBar(user);
-      setTimeout(addTrendingBadges, 1000); // wait for dynamic content to render
+    /* Streak Banner */
+    .doac-streak-banner {
+      background: linear-gradient(90deg, rgba(255,107,0,0.2), rgba(255,215,0,0.15));
+      border: 1px solid rgba(255,165,0,0.4);
+      border-radius: 10px;
+      padding: 10px 20px;
+      text-align: center;
+      color: #FFD700;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    // All pages
-    addEpisodePageEngagement();
-    startSocialProofToasts();
-    setupExitIntent();
-    addScrollPrompt();
-  }
+    /* Progress System */
+    .doac-progress {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 1.5rem;
+    }
+    .doac-progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; color: #ccc; font-size: 0.85rem; }
+    .doac-progress-bar { background: rgba(255,255,255,0.1); border-radius: 10px; height: 8px; overflow: hidden; }
+    .doac-progress-fill { background: linear-gradient(90deg, #FFD700, #FFA500); height: 100%; border-radius: 10px; transition: width 1s ease; }
+    .doac-progress small { color: #888; font-size: 0.8rem; display: block; margin-top: 6px; }
 
-  // Run when DOM ready
+    /* Daily Wisdom */
+    .doac-daily-wisdom {
+      background: rgba(255,215,0,0.05);
+      border-left: 4px solid #FFD700;
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      text-align: center;
+    }
+    .doac-daily-label { color: #FFD700; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; }
+    .doac-daily-wisdom blockquote { color: #e0e0e0; font-size: 1.15rem; line-height: 1.6; font-style: italic; margin: 0; }
+    .doac-daily-wisdom cite { color: #888; font-size: 0.85rem; display: block; margin-top: 8px; }
+
+    /* Exit Intent */
+    .doac-exit-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 100000;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .doac-exit-popup {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border: 2px solid rgba(255,215,0,0.3);
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 480px;
+      text-align: center;
+      position: relative;
+    }
+    .doac-exit-popup h2 { color: #fff; font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .doac-exit-popup p { color: #ccc; font-size: 1rem; line-height: 1.5; }
+    .doac-exit-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: #888; font-size: 1.5rem; cursor: pointer; }
+    .doac-exit-form { display: flex; gap: 8px; margin-top: 1rem; }
+    .doac-exit-form input { flex: 1; padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: #fff; font-size: 1rem; }
+    .doac-exit-form button { padding: 12px 20px; background: linear-gradient(135deg, #FFD700, #FFA500); border: none; border-radius: 10px; color: #000; font-weight: 700; cursor: pointer; white-space: nowrap; }
+
+    /* Live Reader Badge - Floating */
+    .doac-live-badge-float {
+      background: rgba(255,107,0,0.95);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(255,107,0,0.4);
+      animation: doac-pulse 2s infinite;
+      cursor: default;
+    }
+    @keyframes doac-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Trending Section */
+    .doac-trending-section {
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      padding: 0 2rem;
+    }
+    .doac-trending-section h3 { color: #FFD700; font-size: 1.3rem; margin-bottom: 1rem; text-align: center; }
+    .doac-trending-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .doac-trending-rank { color: #FFD700; font-size: 1.5rem; font-weight: 800; min-width: 40px; text-align: center; }
+    .doac-trending-item strong { color: #fff; }
+    .doac-trending-item small { color: #ff6b00; font-size: 0.8rem; display: block; margin-top: 4px; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .doac-toast { bottom: 10px; left: 10px; right: 10px; max-width: none; font-size: 0.8rem; padding: 8px 12px; }
+      .doac-exit-form { flex-direction: column; }
+      .doac-trending-section { padding: 0 1rem; }
+      .doac-live-badge-float { font-size: 0.7rem !important; padding: 4px 10px !important; bottom: 10px !important; right: 10px !important; }
+      .doac-progress { padding: 10px 14px; font-size: 0.8rem; }
+      .doac-daily-wisdom { padding: 14px 16px; margin: 0 1rem 1.5rem; }
+      .doac-daily-wisdom blockquote { font-size: 1rem; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // ============================================
+  // INIT ALL
+  // ============================================
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
+  }
+
+  // Beehiiv subscription — replace form with official embed iframe
+  var BEEHIIV_PUB = 'eb21f0ed-a0fa-4e80-a15a-bbd334e4bcdb';
+  var BEEHIIV_EMBED = '<div style="display:flex;justify-content:center;"><iframe src="https://embeds.beehiiv.com/' + BEEHIIV_PUB + '?slim=true" data-test-id="beehiiv-embed" height="52" frameborder="0" scrolling="no" style="margin:0;border-radius:12px !important;background-color:transparent;width:100%;max-width:500px;"></iframe></div>';
+
+  function initNewsletterForms() {
+    // Replace episode page newsletter CTAs with Beehiiv embed
+    document.querySelectorAll('.newsletter-cta').forEach(function(cta) {
+      var btn = cta.querySelector('button');
+      var input = cta.querySelector('input[type="email"]');
+      if (btn && input) {
+        // Replace the form elements with the embed iframe
+        var wrapper = input.parentElement;
+        if (wrapper) wrapper.innerHTML = BEEHIIV_EMBED;
+      }
+    });
+    // Handle exit-intent form — replace with embed
+    document.addEventListener('submit', function(e) {
+      if (e.target.classList.contains('doac-exit-form')) {
+        e.preventDefault();
+        e.target.innerHTML = BEEHIIV_EMBED;
+      }
+    });
+  }
+
+  function init() {
+    fixSubscriberCount();
+    initStreakTracker();
+    initProgressSystem();
+    initDailyWisdom();
+    // initExitIntent(); // Disabled — too annoying
+    initLiveReaders();
+    initTrending();
+    initNewsletterForms();
   }
 
 })();
