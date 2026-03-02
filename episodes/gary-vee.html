@@ -90,12 +90,7 @@
         <div class="newsletter-cta">
             <h3>🎯 Get Weekly DOAC Wisdom</h3>
             <p>The best insights from Diary of a CEO episodes, distilled into a 5-minute weekly read. No fluff, just actionable wisdom.</p>
-            <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                <input type="hidden" name="form-name" value="newsletter">
-                <input type="hidden" name="bot-field">
-                <input type="email" name="email" placeholder="Enter your email" required>
-                <button type="submit">Subscribe Free</button>
-            </form>
+            <div style="display:flex;gap:8px;max-width:400px;margin:0 auto"><input type="email" id="nl-email" placeholder="you@email.com" style="flex:1;padding:10px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;font-size:.95rem;background:rgba(0,0,0,0.3);color:#fff"><button type="button" onclick="doacSub()" style="padding:10px 20px;background:#FFD700;border:none;border-radius:6px;font-weight:600;cursor:pointer">Subscribe</button></div><p id="nl-msg" style="font-size:.85rem;margin-top:8px;min-height:18px"></p><script>function doacSub(){var e=document.getElementById("nl-email"),m=document.getElementById("nl-msg"),v=e.value;if(!v||v.indexOf("@")<0){m.style.color="#ff6b6b";m.textContent="Please enter a valid email.";return}fetch("https://newsletter-api.maxwellgrey014.workers.dev/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:v})}).then(r=>r.json().then(d=>({ok:r.ok,d}))).then(r=>{m.style.color=r.ok?"#4ade80":"#ff6b6b";m.textContent=r.d.message||r.d.error;if(r.ok)e.value=""}).catch(()=>{m.style.color="#ff6b6b";m.textContent="Something went wrong."})}</script>
         </div>
 
         <p style="text-align:center;margin-top:2rem;">
