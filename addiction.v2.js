@@ -11,70 +11,7 @@
   // 1. FAKE LIVE ACTIVITY TOASTS
   // "Sarah from London just read the Alex Hormozi episode"
   // ============================================
-  const names = [
-    'Sarah', 'James', 'Emma', 'David', 'Olivia', 'Marcus', 'Sophia', 'Daniel',
-    'Mia', 'Alex', 'Isabella', 'Ryan', 'Ava', 'Chris', 'Emily', 'Jordan',
-    'Chloe', 'Tyler', 'Grace', 'Ethan', 'Zoe', 'Nathan', 'Lily', 'Sam',
-    'Hannah', 'Lucas', 'Maya', 'Jake', 'Aria', 'Leo', 'Nora', 'Max'
-  ];
-  
-  const cities = [
-    'London', 'New York', 'Toronto', 'Sydney', 'Dubai', 'Amsterdam', 'Berlin',
-    'Los Angeles', 'Singapore', 'Dublin', 'Melbourne', 'Austin', 'Miami',
-    'Stockholm', 'Cape Town', 'Barcelona', 'Denver', 'Chicago', 'Vancouver',
-    'Manchester', 'San Francisco', 'Lisbon', 'Mumbai', 'Seattle', 'Nashville'
-  ];
-  
-  const episodes = [
-    'Alex Hormozi', 'Andrew Huberman', 'Chris Williamson', 'Matthew Walker',
-    'Dr. Julie Smith', 'Steven Bartlett', 'Jordan Peterson', 'Simon Sinek',
-    'James Clear', 'MrBeast', 'Michelle Obama', 'Mo Gawdat', 'Daniel Priestley',
-    'Mel Robbins', 'Tim Ferriss', 'Naval Ravikant', 'Tony Robbins',
-    'Jay Shetty', 'Mark Manson', 'Brené Brown', 'Gary Vee', 'Elon Musk'
-  ];
-  
-  const actions = [
-    'just read the', 'is reading the', 'saved the', 'shared the',
-    'bookmarked the', 'just discovered the'
-  ];
-
-  function createToast() {
-    const name = names[Math.floor(Math.random() * names.length)];
-    const city = cities[Math.floor(Math.random() * cities.length)];
-    const episode = episodes[Math.floor(Math.random() * episodes.length)];
-    const action = actions[Math.floor(Math.random() * actions.length)];
-    const mins = Math.floor(Math.random() * 12) + 1;
-
-    const toast = document.createElement('div');
-    toast.className = 'doac-toast';
-    toast.innerHTML = `
-      <div class="doac-toast-icon">👤</div>
-      <div class="doac-toast-content">
-        <strong>${name}</strong> from ${city}
-        <span>${action} <em>${episode}</em> episode</span>
-        <small>${mins} min ago</small>
-      </div>
-      <button class="doac-toast-close" onclick="this.parentElement.remove()">×</button>
-    `;
-    document.body.appendChild(toast);
-
-    // Animate in
-    requestAnimationFrame(() => {
-      toast.style.transform = 'translateX(0)';
-      toast.style.opacity = '1';
-    });
-
-    // Auto-remove after 5s
-    setTimeout(() => {
-      toast.style.transform = 'translateX(120%)';
-      toast.style.opacity = '0';
-      setTimeout(() => toast.remove(), 400);
-    }, 5000);
-  }
-
-  // Show first toast after 8s, then every 20-40s
-  setTimeout(createToast, 8000);
-  setInterval(createToast, Math.floor(Math.random() * 20000) + 20000);
+  // Fabricated activity notifications removed.
 
   // ============================================
   // 2. READING STREAK TRACKER (Loss Aversion)
@@ -83,7 +20,7 @@
     const today = new Date().toDateString();
     const lastVisit = localStorage.getItem('doac_last_visit');
     let streak = parseInt(localStorage.getItem('doac_streak') || '0');
-    
+
     if (lastVisit === today) {
       // Already visited today
     } else {
@@ -119,7 +56,7 @@
     // Track episodes viewed
     const viewed = JSON.parse(localStorage.getItem('doac_viewed') || '[]');
     const currentPath = window.location.pathname;
-    
+
     if (currentPath.includes('/episodes/') && !viewed.includes(currentPath)) {
       viewed.push(currentPath);
       localStorage.setItem('doac_viewed', JSON.stringify(viewed));
@@ -177,10 +114,10 @@
       { quote: "The quality of your life is determined by the quality of your questions.", author: "Tony Robbins on DOAC" },
       { quote: "Discipline is choosing between what you want now and what you want most.", author: "Key DOAC theme" },
     ];
-    
+
     const dayIndex = Math.floor(Date.now() / 86400000) % wisdoms.length;
     const wisdom = wisdoms[dayIndex];
-    
+
     // Only show on homepage
     if (window.location.pathname === '/' || window.location.pathname === '') {
       const banner = document.createElement('div');
@@ -204,7 +141,7 @@
     document.addEventListener('mouseout', function(e) {
       if (e.clientY < 10 && !cooldown && !document.querySelector('.doac-exit-overlay')) {
         cooldown = true;
-        
+
         const overlay = document.createElement('div');
         overlay.className = 'doac-exit-overlay';
         overlay.innerHTML = `
@@ -235,52 +172,15 @@
   // ============================================
   // 6. LIVE READER COUNT ON EPISODES
   // ============================================
-  function initLiveReaders() {
-    // Single floating "reading now" badge
-    const isEpisodePage = window.location.pathname.includes('/episodes/');
-    const count = Math.floor(Math.random() * 89) + 12;
-    const badge = document.createElement('div');
-    badge.className = 'doac-live-badge-float';
-    badge.innerHTML = '🔥 ' + count + ' reading now';
-    // Homepage: bottom-right. Episode pages: bottom-left.
-    if (isEpisodePage) {
-      badge.style.cssText = 'position:fixed;bottom:20px;left:20px;z-index:9999;';
-    } else {
-      badge.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;';
-    }
-    document.body.appendChild(badge);
-    // Slowly update the count
-    setInterval(function() {
-      var delta = Math.random() > 0.5 ? 1 : -1;
-      var cur = parseInt(badge.textContent.match(/\d+/)[0]) + delta;
-      if (cur < 10) cur = 10;
-      if (cur > 120) cur = 120;
-      badge.innerHTML = '🔥 ' + cur + ' reading now';
-    }, 8000);
-  }
-
   // ============================================
   // 7. FIX SUBSCRIBER COUNT (Social Proof)
   // ============================================
-  function fixSubscriberCount() {
-    const noteEl = document.querySelector('.newsletter-note');
-    if (noteEl && noteEl.textContent.includes('Join 0')) {
-      noteEl.innerHTML = 'Join <strong>2,847</strong> readers • Unsubscribe anytime';
-    }
-    // Also update any other "0 readers" text
-    document.querySelectorAll('*').forEach(el => {
-      if (el.children.length === 0 && el.textContent.includes('Join 0 readers')) {
-        el.innerHTML = el.innerHTML.replace('Join 0 readers', 'Join <strong>2,847</strong> readers');
-      }
-    });
-  }
-
   // ============================================
   // 8. "TRENDING THIS WEEK" SECTION
   // ============================================
   function initTrending() {
     if (window.location.pathname !== '/' && window.location.pathname !== '') return;
-    
+
     const section = document.createElement('div');
     section.className = 'doac-trending-section';
     section.innerHTML = `
@@ -491,13 +391,13 @@
   }
 
   function init() {
-    fixSubscriberCount();
+    // No inferred subscriber counts.
     initStreakTracker();
     initProgressSystem();
-    initDailyWisdom();
+    // Quote promotion waits for source verification.
     initExitIntent();
-    initLiveReaders();
-    initTrending();
+    // No simulated live readers.
+    // No unmeasured popularity claims.
     initNewsletterForms();
   }
 

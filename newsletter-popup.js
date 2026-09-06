@@ -13,6 +13,111 @@
  * 
  * Add to page: <script src="/newsletter-popup.js" defer></script>
  */
+// Binds the in-page .newsletter-cta blocks, which ship an email input and a button
+// with no form, no handler and no endpoint. Must stay ABOVE the dismissed/subscribed
+// early-returns below: those return out of the whole IIFE, so a reader who dismissed
+// the popup once would otherwise have no working capture surface on the page at all.
+(function bindInlineNewsletterCTAs() {
+  'use strict';
+
+  if (window.__doacInlineCtaBound) return;
+  window.__doacInlineCtaBound = true;
+
+  const API = 'https://newsletter-api.maxwellgrey014.workers.dev';
+
+  function payloadFor(formId) {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      source: 'inline_cta',
+      formId: formId,
+      context: window.innerWidth < 768 ? 'mobile-inline' : 'desktop-inline',
+      pagePath: window.location.pathname,
+      pageUrl: window.location.href,
+      referrer: document.referrer || null,
+      utm: {
+        source: params.get('utm_source'),
+        medium: params.get('utm_medium'),
+        campaign: params.get('utm_campaign'),
+        content: params.get('utm_content'),
+        term: params.get('utm_term')
+      }
+    };
+  }
+
+  function bind(block, idx) {
+    if (block.dataset.doacBound === '1') return;
+    const input = block.querySelector('input[type="email"]');
+    const btn = block.querySelector('button');
+    if (!input || !btn) return;
+    // A block already inside a <form> is wired by other code; leave it alone.
+    if (block.querySelector('form') || block.closest('form')) return;
+    block.dataset.doacBound = '1';
+
+    const status = document.createElement('p');
+    status.className = 'doac-inline-status';
+    status.style.cssText = 'margin-top:.75rem;font-size:.85rem;min-height:1.2em';
+    block.appendChild(status);
+
+    const submit = async () => {
+      const email = input.value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        status.style.color = '#ff8a8a';
+        status.textContent = 'Please enter a valid email address.';
+        return;
+      }
+      btn.disabled = true;
+      const label = btn.textContent;
+      btn.textContent = 'Subscribing...';
+      status.style.color = '#ccc';
+      status.textContent = '';
+      try {
+        const res = await fetch(API + '/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, ...payloadFor('newsletter-cta-' + idx) })
+        });
+        if (res.ok || res.status === 409) {
+          try { localStorage.setItem('doac_subscribed', '1'); } catch (e) {}
+          block.querySelector('.form-row').style.display = 'none';
+          status.style.color = '#FFD700';
+          status.textContent = res.status === 409
+            ? "You're already on the list — check your inbox."
+            : "You're in. Thanks for subscribing.";
+          if (typeof gtag === 'function') {
+            gtag('event', 'newsletter_signup', {
+              event_category: 'engagement',
+              event_label: 'inline_cta',
+              value: 1
+            });
+          }
+        } else {
+          throw new Error('HTTP ' + res.status);
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = label;
+        status.style.color = '#ff8a8a';
+        status.textContent = "That didn't go through. Try again in a moment.";
+      }
+    };
+
+    btn.addEventListener('click', (e) => { e.preventDefault(); submit(); });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); submit(); }
+    });
+  }
+
+  function bindAll() {
+    document.querySelectorAll('.newsletter-cta').forEach(bind);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindAll);
+  } else {
+    bindAll();
+  }
+})();
+
 (function() {
   'use strict';
 
@@ -38,7 +143,7 @@
       cta: 'Send Me the Insights'
     },
     {
-      headline: '📧 Join ' + (SUBSCRIBER_BASE + Math.floor(Math.random() * 30)) + ' Smart Readers',
+      headline: '📧 Get the weekly edit',
       subhead: 'The best Diary of a CEO insights, distilled into a weekly email you actually want to read.',
       cta: 'Subscribe Free'
     },
@@ -60,6 +165,25 @@
   let shown = false;
   const isMobile = window.innerWidth < 768;
 
+  function getTrackingPayload() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      source: 'newsletter_popup',
+      formId: 'newsletter-popup',
+      context: isMobile ? 'mobile-popup' : 'desktop-popup',
+      pagePath: window.location.pathname,
+      pageUrl: window.location.href,
+      referrer: document.referrer || null,
+      utm: {
+        source: params.get('utm_source'),
+        medium: params.get('utm_medium'),
+        campaign: params.get('utm_campaign'),
+        content: params.get('utm_content') || `popup_v${variantIdx}`,
+        term: params.get('utm_term')
+      }
+    };
+  }
+
   function createPopup() {
     if (shown) return;
     shown = true;
@@ -78,7 +202,7 @@
         </form>
         <p class="doac-nl-proof">
           <span class="doac-nl-dot"></span>
-          <span id="doac-nl-count">${SUBSCRIBER_BASE + Math.floor(Math.random() * 30)}</span> readers this week &middot; Unsubscribe anytime
+          Free newsletter &middot; Unsubscribe anytime
         </p>
         <p class="doac-nl-success" id="doac-nl-success" style="display:none;">
           ✅ You're in! Check your inbox for a welcome email.
@@ -278,7 +402,7 @@
         const res = await fetch(API + '/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email, ...getTrackingPayload() })
         });
         
         if (res.ok || res.status === 409) {
