@@ -195,7 +195,7 @@ nav{display:flex;gap:1.2rem;flex-wrap:wrap}nav a{color:#aaa;font-size:.9rem}nav 
 async function doSignup(email, msgEl, btn) {
     btn.disabled=true; btn.textContent='Subscribing...';
     try {
-        const r = await fetch('https://email-capture.maxwellgrey014.workers.dev/subscribe', {
+        const r = await fetch('https://newsletter-api.maxwellgrey014.workers.dev/subscribe', {
             method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email})
         });
         if(r.ok) {

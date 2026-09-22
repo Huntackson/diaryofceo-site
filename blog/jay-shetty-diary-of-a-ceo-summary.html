@@ -268,7 +268,7 @@ async function handleSignup(e){
   const btn=e.target.querySelector('button');
   btn.disabled=true;btn.textContent='Subscribing...';
   try{
-    const r=await fetch('https://email-capture.maxwellgrey014.workers.dev/subscribe',{
+    const r=await fetch('https://newsletter-api.maxwellgrey014.workers.dev/subscribe',{
       method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})
     });
     if(r.ok){

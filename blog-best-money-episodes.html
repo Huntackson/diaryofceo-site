@@ -303,7 +303,7 @@ function handleSubscribe(e, pos) {
     e.preventDefault();
     var email = document.getElementById('email-' + pos).value;
     if (!email) return false;
-    fetch('https://email-capture.maxwellgrey014.workers.dev/subscribe', {
+    fetch('https://newsletter-api.maxwellgrey014.workers.dev/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email })
