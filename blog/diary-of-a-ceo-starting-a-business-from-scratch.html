@@ -563,7 +563,7 @@ const form=document.getElementById(formId);
 const email=form.querySelector('input[type="email"]').value;
 const msg=document.getElementById('msg-'+formId);
 try{
-const r=await fetch('https://doac-email.maxwellgrey014.workers.dev/signup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+const r=await fetch('https://newsletter-api.maxwellgrey014.workers.dev/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
 const d=await r.json();
 if(d.success){msg.textContent='✅ You\'re in! Check your inbox.';msg.style.color='#00c896';form.querySelector('input').value='';}
 else{msg.textContent=d.message||'Something went wrong.';msg.style.color='#ff6b6b';}

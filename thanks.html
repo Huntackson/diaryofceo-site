@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="noindex" name="robots"/>
+<title>You're In — Diary of a CEO Summaries</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0a0a0a;color:#eee;font-family:system-ui,-apple-system,sans-serif;padding:1.5rem}
+.card{max-width:520px;text-align:center;background:#141414;border:1px solid rgba(255,215,0,.25);border-radius:16px;padding:2.5rem}
+h1{color:#FFD700;font-size:1.75rem;margin:0 0 .75rem}
+p{color:#bbb;line-height:1.6;margin:0 0 1.25rem}
+a.btn{display:inline-block;padding:.8rem 1.6rem;border-radius:10px;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;font-weight:700;text-decoration:none}
+</style></head>
+<body><div class="card">
+<h1 id="h">🎉 You're in!</h1>
+<p id="m">Check your inbox for a welcome email. Every week you'll get the best insights from Diary of a CEO — distilled, actionable, no fluff.</p>
+<a class="btn" href="/">← Back to diaryofceo.online</a>
+</div>
+<script>
+var s=new URLSearchParams(location.search).get('status');
+var H=document.getElementById('h'),M=document.getElementById('m');
+if(s==='already'){H.textContent='✅ Already subscribed';M.textContent="You're already on the list — nothing more to do.";}
+else if(s==='invalid'){H.textContent='⚠️ That email looked off';M.textContent='Please head back and try again with a valid address.';}
+else if(s==='error'){H.textContent='⚠️ Something went wrong';M.textContent="We couldn't read that submission. Please head back and try again.";}
+</script>
+</body></html>

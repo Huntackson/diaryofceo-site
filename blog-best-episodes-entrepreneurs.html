@@ -230,7 +230,7 @@ async function handleSignup(e, source) {
     btn.textContent = 'Subscribing...';
     btn.disabled = true;
     try {
-        const res = await fetch('https://email-signup.maxwellgrey014.workers.dev/signup', {
+        const res = await fetch('https://newsletter-api.maxwellgrey014.workers.dev/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, source: 'blog-best-episodes-entrepreneurs-' + source })
